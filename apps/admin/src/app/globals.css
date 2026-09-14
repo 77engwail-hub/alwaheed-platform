@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F7F5F0;
+    color: #1C1917;
+    font-family: var(--font-tajawal), 'Tajawal', 'Cairo', sans-serif;
+    direction: rtl;
+    text-align: right;
+  }
+}

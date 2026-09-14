@@ -1,0 +1,31 @@
+# Render Blueprint for 100% Free Deployment
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  # 1. Backend API Service
+  - type: web
+    name: alwaheed-api
+    env: node
+    plan: free
+    region: frankfurt
+    buildCommand: pnpm install && pnpm --filter @al-waheed/types build && pnpm --filter @al-waheed/validation build && pnpm --filter @al-waheed/api build && pnpm --filter @al-waheed/api db:push
+    startCommand: pnpm --filter @al-waheed/api start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: alwaheed-db
+          property: connectionString
+
+databases:
+  # 2. Free PostgreSQL Database
+  - name: alwaheed-db
+    plan: free
+    region: frankfurt
+    databaseName: alwaheed
+    user: alwaheed_user

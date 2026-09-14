@@ -1,0 +1,469 @@
+// Prisma Schema for Al-Waheed Architectural Stone & Carving Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ==============================================================================
+// 1. Identity & RBAC (Role-Based Access Control)
+// ==============================================================================
+
+model User {
+  id              String         @id @default(cuid())
+  email           String         @unique
+  passwordHash    String
+  name            String
+  phone           String?
+  role            String         @default("ADMIN") // SUPER_ADMIN, ADMIN, CATALOG_MANAGER, SALES_MANAGER, CONTENT_MANAGER
+  isActive        Boolean        @default(true)
+  lastLoginAt     DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  auditLogs       AuditLog[]
+
+  @@map("users")
+}
+
+// ==============================================================================
+// 2. Catalog & Architectural Materials
+// ==============================================================================
+
+model Category {
+  id            String         @id @default(cuid())
+  nameAr        String
+  nameEn        String
+  slug          String         @unique
+  descriptionAr String?
+  descriptionEn String?
+  imageUrl      String?
+  sortOrder     Int            @default(0)
+  isActive      Boolean        @default(true)
+  parentId      String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  products      Product[]
+
+  @@map("categories")
+}
+
+model Material {
+  id                  String            @id @default(cuid())
+  nameAr              String
+  nameEn              String
+  slug                String            @unique
+  descriptionAr       String?
+  descriptionEn       String?
+  origin              String?           // e.g. "حجر صنعاني حبش", "حجر بيج مأربي"
+  density             String?           // e.g. "2.65 g/cm³"
+  compressiveStrength String?           // e.g. "120 MPa"
+  waterAbsorption     String?           // e.g. "0.45%"
+  imageUrl            String?
+  isActive            Boolean           @default(true)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  productMaterials    ProductMaterial[]
+  projectMaterials    ProjectMaterial[]
+
+  @@map("materials")
+}
+
+model Finish {
+  id                String          @id @default(cuid())
+  nameAr            String          // e.g. "بوشارده", "مجلي ناعم", "مسمسم", "مطبه"
+  nameEn            String
+  slug              String          @unique
+  descriptionAr     String?
+  descriptionEn     String?
+  textureSampleUrl  String?
+  isActive          Boolean         @default(true)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  productFinishes   ProductFinish[]
+
+  @@map("finishes")
+}
+
+model Color {
+  id        String   @id @default(cuid())
+  nameAr    String
+  nameEn    String
+  hexCode   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("colors")
+}
+
+model Product {
+  id              String            @id @default(cuid())
+  titleAr         String
+  titleEn         String
+  slug            String            @unique
+  sku             String            @unique
+  shortDescAr     String?
+  shortDescEn     String?
+  fullDescAr      String?
+  fullDescEn      String?
+  categoryId      String
+  category        Category          @relation(fields: [categoryId], references: [id])
+  pricingMode     String            @default("FIXED_PRICE") // FIXED_PRICE, STARTING_FROM, PER_PIECE, PER_SQUARE_METER, PER_LINEAR_METER, PER_CUBIC_METER, CUSTOM_QUOTE, CONTACT_FOR_PRICE
+  unit            String            @default("PIECE") // PIECE, SQUARE_METER, LINEAR_METER, CUBIC_METER, SET, PROJECT
+  basePrice       Float?
+  compareAtPrice  Float?
+  currency        String            @default("YER")
+  isFeatured      Boolean           @default(false)
+  isActive        Boolean           @default(true)
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  images          ProductImage[]
+  variants        ProductVariant[]
+  materials       ProductMaterial[]
+  finishes        ProductFinish[]
+
+  @@map("products")
+}
+
+model ProductImage {
+  id           String   @id @default(cuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url          String
+  thumbnailUrl String?
+  altTextAr    String?
+  altTextEn    String?
+  sortOrder    Int      @default(0)
+  isFeatured   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@map("product_images")
+}
+
+model ProductVariant {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku         String
+  titleAr     String
+  titleEn     String?
+  lengthCm    Float?
+  widthCm     Float?
+  thicknessCm Float?
+  priceDelta  Float    @default(0)
+  isDefault   Boolean  @default(false)
+  stockStatus String   @default("IN_STOCK") // IN_STOCK, MADE_TO_ORDER, OUT_OF_STOCK
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("product_variants")
+}
+
+model ProductMaterial {
+  id         String   @id @default(cuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  materialId String
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, materialId])
+  @@map("product_materials")
+}
+
+model ProductFinish {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  finishId  String
+  finish    Finish   @relation(fields: [finishId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, finishId])
+  @@map("product_finishes")
+}
+
+// ==============================================================================
+// 3. Projects & Architectural Portfolio
+// ==============================================================================
+
+model ProjectCategory {
+  id        String    @id @default(cuid())
+  nameAr    String
+  nameEn    String
+  slug      String    @unique
+  sortOrder Int       @default(0)
+  projects  Project[]
+
+  @@map("project_categories")
+}
+
+model Project {
+  id             String            @id @default(cuid())
+  titleAr        String
+  titleEn        String
+  slug           String            @unique
+  projectType    String            @default("VILLA_FACADE") // VILLA_FACADE, PALACE_FACADE, COMMERCIAL_BUILDING, MOSQUE, ROYAL_ENTRANCE, INTERIOR_DECOR, WATERFALL_FOUNTAIN, STONE_CARVING_ART, CUSTOM_WORK
+  locationCity   String?
+  completionYear Int?
+  shortDescAr    String?
+  shortDescEn    String?
+  fullDescAr     String?
+  fullDescEn     String?
+  coverImageUrl  String
+  isFeatured     Boolean           @default(false)
+  isActive       Boolean           @default(true)
+  categoryId     String?
+  category       ProjectCategory?  @relation(fields: [categoryId], references: [id])
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  images         ProjectImage[]
+  materials      ProjectMaterial[]
+
+  @@map("projects")
+}
+
+model ProjectImage {
+  id           String   @id @default(cuid())
+  projectId    String
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  url          String
+  thumbnailUrl String?
+  captionAr    String?
+  imageType    String   @default("GALLERY") // MAIN, GALLERY, BEFORE, AFTER, DETAIL, BLUEPRINT
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@map("project_images")
+}
+
+model ProjectMaterial {
+  id         String   @id @default(cuid())
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  materialId String
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, materialId])
+  @@map("project_materials")
+}
+
+// ==============================================================================
+// 4. Quotations & Custom Design Requests (RFQ State Machine)
+// ==============================================================================
+
+model Quotation {
+  id                 String                   @id @default(cuid())
+  referenceNumber    String                   @unique // e.g. RFQ-2026-0042
+  customerName       String
+  phone              String
+  whatsapp           String?
+  email              String?
+  city               String
+  projectType        String
+  preferredStoneType String?
+  approximateBudget  String?
+  description        String
+  needsInstallation  Boolean                  @default(false)
+  needsDelivery      Boolean                  @default(true)
+  status             String                   @default("NEW") // NEW, UNDER_REVIEW, NEED_MORE_INFO, PRICED, SENT, ACCEPTED, REJECTED, EXPIRED, CONVERTED_TO_ORDER
+  totalQuotedPrice   Float?
+  currency           String                   @default("YER")
+  validUntil         DateTime?
+  adminNotes         String?
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+  items              QuotationItem[]
+  attachments        QuotationAttachment[]
+  statusHistory      QuotationStatusHistory[]
+  messages           QuotationMessage[]
+
+  @@map("quotations")
+}
+
+model QuotationItem {
+  id                 String    @id @default(cuid())
+  quotationId        String
+  quotation          Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  productId          String?
+  customTitle        String?
+  materialPreference String?
+  finishPreference   String?
+  quantity           Float     @default(1)
+  unit               String    @default("PIECE")
+  dimensionsDesc     String?
+  unitPriceEstimate  Float?
+  totalPriceEstimate Float?
+  adminNotes         String?
+
+  @@map("quotation_items")
+}
+
+model QuotationAttachment {
+  id          String    @id @default(cuid())
+  quotationId String
+  quotation   Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  fileName    String
+  fileUrl     String
+  fileSize    Int
+  mimeType    String
+  createdAt   DateTime  @default(now())
+
+  @@map("quotation_attachments")
+}
+
+model QuotationStatusHistory {
+  id             String    @id @default(cuid())
+  quotationId    String
+  quotation      Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  previousStatus String?
+  newStatus      String
+  changedById    String?
+  changedByName  String?
+  notes          String?
+  createdAt      DateTime  @default(now())
+
+  @@map("quotation_status_history")
+}
+
+model QuotationMessage {
+  id          String    @id @default(cuid())
+  quotationId String
+  quotation   Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  senderRole  String    @default("ADMIN") // ADMIN, CUSTOMER
+  senderName  String
+  message     String
+  createdAt   DateTime  @default(now())
+
+  @@map("quotation_messages")
+}
+
+// ==============================================================================
+// 5. Orders & Direct E-Commerce
+// ==============================================================================
+
+model Order {
+  id              String               @id @default(cuid())
+  orderNumber     String               @unique // e.g. ORD-2026-0001
+  customerName    String
+  phone           String
+  email           String?
+  shippingAddress String
+  city            String
+  status          String               @default("PENDING") // PENDING, CONFIRMED, PROCESSING, READY_FOR_DISPATCH, SHIPPED, DELIVERED, CANCELLED
+  paymentStatus   String               @default("UNPAID") // UNPAID, PARTIALLY_PAID, PAID, REFUNDED
+  paymentMethod   String               @default("CASH_ON_DELIVERY") // CASH_ON_DELIVERY, BANK_TRANSFER, CREDIT_CARD, CUSTOM_AGREEMENT
+  subtotal        Float                @default(0)
+  deliveryFee     Float                @default(0)
+  discount        Float                @default(0)
+  totalAmount     Float                @default(0)
+  currency        String               @default("YER")
+  notes           String?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  items           OrderItem[]
+  statusHistory   OrderStatusHistory[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id         String  @id @default(cuid())
+  orderId    String
+  order      Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId  String
+  variantId  String?
+  titleAr    String
+  quantity   Float
+  unit       String  @default("PIECE")
+  unitPrice  Float
+  totalPrice Float
+
+  @@map("order_items")
+}
+
+model OrderStatusHistory {
+  id             String   @id @default(cuid())
+  orderId        String
+  order          Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  previousStatus String?
+  newStatus      String
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  @@map("order_status_history")
+}
+
+// ==============================================================================
+// 6. CMS, Media Assets, Settings, Contact & Audit
+// ==============================================================================
+
+model Setting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  group       String   @default("GENERAL") // GENERAL, CONTACT, SOCIAL, APPEARANCE, SEO
+  updatedAt   DateTime @updatedAt
+
+  @@map("settings")
+}
+
+model HomepageSection {
+  id         String   @id @default(cuid())
+  sectionKey String   @unique // hero, services, why_us, custom_cta, portfolio_preview
+  titleAr    String
+  subtitleAr String?
+  contentAr  String?
+  mediaUrl   String?
+  isActive   Boolean  @default(true)
+  sortOrder  Int      @default(0)
+  updatedAt  DateTime @updatedAt
+
+  @@map("homepage_sections")
+}
+
+model MediaAsset {
+  id           String   @id @default(cuid())
+  fileName     String
+  originalName String
+  fileUrl      String
+  mimeType     String
+  fileSize     Int
+  category     String   @default("GENERAL") // STONES, FACADES, CARVINGS, BLUEPRINTS, BANNERS
+  altTextAr    String?
+  createdAt    DateTime @default(now())
+
+  @@map("media_assets")
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  subject   String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("contact_messages")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userEmail  String?
+  action     String
+  entityType String
+  entityId   String?
+  details    String?  // JSON stringified metadata
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@map("audit_logs")
+}

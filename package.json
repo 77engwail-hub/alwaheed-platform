@@ -1,0 +1,32 @@
+{
+  "name": "al-waheed-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "منصة الوحيد للزخرفة المعمارية والنحت والمقاولات العامة - Architectural Stone & Carving Platform",
+  "author": "Al-Waheed Enterprise",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rimraf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "db:generate": "pnpm --filter @al-waheed/api db:generate",
+    "db:push": "pnpm --filter @al-waheed/api db:push",
+    "db:seed": "pnpm --filter @al-waheed/api db:seed",
+    "db:studio": "pnpm --filter @al-waheed/api db:studio"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
