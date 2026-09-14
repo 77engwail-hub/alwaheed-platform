@@ -183,7 +183,7 @@ function RfqTrackingContent() {
           {/* Action CTAs */}
           <div className="pt-4 border-t border-stone-100 flex flex-col sm:flex-row gap-3 justify-end">
             <a
-              href={`https://wa.me/967770663641?text=${encodeURIComponent(
+              href={`https://wa.me/967777360681?text=${encodeURIComponent(
                 `السلام عليكم، أود المتابعة بخصوص عرض السعر رقم ${quotation.referenceNumber}`
               )}`}
               target="_blank"

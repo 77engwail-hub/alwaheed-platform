@@ -42,7 +42,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   const modeLabel = formatPricingMode(product.pricingMode);
 
   const whatsAppUrl = buildWhatsAppInquiryUrl({
-    phone: '967770663641',
+    phone: '967777360681',
     productTitle: product.titleAr,
     url: `http://localhost:3000/products/${product.slug}`,
   });

@@ -7,8 +7,8 @@ import { setAdminToken } from '../../lib/admin-api';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@alwaheed-stone.com');
-  const [password, setPassword] = useState('Admin@AlWaheed2026!');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -65,9 +65,10 @@ export default function AdminLoginPage() {
               <input
                 type="email"
                 required
+                placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-stone-950 border border-stone-800 text-stone-100 px-4 py-3 pr-10 rounded-xl text-sm focus:border-gold focus:ring-1 focus:ring-gold outline-none font-mono"
+                className="w-full bg-stone-950 border border-stone-800 text-stone-100 px-4 py-3 pr-10 rounded-xl text-sm focus:border-gold focus:ring-1 focus:ring-gold outline-none font-mono placeholder:text-stone-600"
               />
               <Mail className="w-4 h-4 text-stone-500 absolute top-3.5 right-3.5" />
             </div>
@@ -79,9 +80,10 @@ export default function AdminLoginPage() {
               <input
                 type="password"
                 required
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-stone-950 border border-stone-800 text-stone-100 px-4 py-3 pr-10 rounded-xl text-sm focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                className="w-full bg-stone-950 border border-stone-800 text-stone-100 px-4 py-3 pr-10 rounded-xl text-sm focus:border-gold focus:ring-1 focus:ring-gold outline-none placeholder:text-stone-600"
               />
               <Lock className="w-4 h-4 text-stone-500 absolute top-3.5 right-3.5" />
             </div>

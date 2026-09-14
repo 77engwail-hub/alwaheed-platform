@@ -173,7 +173,7 @@ function RfqPageContent() {
               تتبع حالة هذا الطلب
             </button>
             <a
-              href={`https://wa.me/967770663641?text=${encodeURIComponent(
+              href={`https://wa.me/967777360681?text=${encodeURIComponent(
                 `السلام عليكم، قمت بإرسال طلب عرض سعر رقم ${successResult.referenceNumber} باسم ${successResult.customerName}`
               )}`}
               target="_blank"
@@ -243,7 +243,7 @@ function RfqPageContent() {
                 required
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                placeholder="مثال: 770663641"
+                placeholder="مثال: 777360681"
                 className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
             </div>

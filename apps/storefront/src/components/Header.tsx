@@ -31,15 +31,15 @@ export const Header: React.FC = () => {
           </div>
           <div className="flex items-center gap-4">
             <a
-              href="tel:+967770663641"
+              href="tel:+967777360681"
               className="flex items-center gap-1 hover:text-gold transition-colors font-mono"
               dir="ltr"
             >
               <Phone className="w-3.5 h-3.5 text-gold" />
-              <span>+967 770663641</span>
+              <span>+967 777 360 681</span>
             </a>
             <a
-              href="https://wa.me/967770663641"
+              href="https://wa.me/967777360681"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors"

@@ -93,7 +93,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <ArrowLeft className="w-3.5 h-3.5" />
           </Link>
           <a
-            href={`https://wa.me/967770663641?text=${encodeURIComponent(
+            href={`https://wa.me/967777360681?text=${encodeURIComponent(
               `السلام عليكم، أود الاستفسار عن تفاصيل وأسعار: ${product.titleAr} (SKU: ${product.sku})`
             )}`}
             target="_blank"

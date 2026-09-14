@@ -18,7 +18,7 @@ export class ProjectsService {
 
     if (query.projectType) where.projectType = query.projectType;
     if (query.categorySlug) where.category = { slug: query.categorySlug };
-    if (query.isFeatured !== undefined) where.isFeatured = query.isFeatured;
+    if (query.isFeatured !== undefined) where.isFeatured = String(query.isFeatured) === 'true';
 
     if (query.search) {
       where.OR = [

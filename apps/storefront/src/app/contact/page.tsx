@@ -88,8 +88,8 @@ export default function ContactPage() {
                 <Phone className="w-5 h-5 text-gold shrink-0 mt-1" />
                 <div>
                   <span className="font-bold text-stone-100 block">رقم الهاتف المباشر:</span>
-                  <a href="tel:+967770663641" className="text-stone-300 hover:text-gold font-mono" dir="ltr">
-                    +967 770663641
+                  <a href="tel:+967777360681" className="text-stone-300 hover:text-gold font-mono" dir="ltr">
+                    +967 777 360 681
                   </a>
                 </div>
               </div>
@@ -99,13 +99,13 @@ export default function ContactPage() {
                 <div>
                   <span className="font-bold text-stone-100 block">خدمة عملاء الواتساب:</span>
                   <a
-                    href="https://wa.me/967770663641"
+                    href="https://wa.me/967777360681"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-emerald-400 hover:text-emerald-300 font-mono"
                     dir="ltr"
                   >
-                    +967 770663641
+                    +967 777 360 681
                   </a>
                 </div>
               </div>

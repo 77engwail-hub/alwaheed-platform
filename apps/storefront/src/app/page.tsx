@@ -333,7 +333,7 @@ export default async function HomePage() {
                 <span>بدء طلب التسعير المخصص (RFQ)</span>
               </Link>
               <a
-                href="https://wa.me/967770663641?text=السلام%20عليكم،%20أود%20إرسال%20مخطط%20واجهة%20للتسعير"
+                href="https://wa.me/967777360681?text=السلام%20عليكم،%20أود%20إرسال%20مخطط%20واجهة%20للتسعير"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-emerald-700/80 hover:bg-emerald-600 text-white font-bold px-6 py-3.5 rounded-xl flex items-center gap-2 transition-all text-sm"

@@ -20,7 +20,7 @@ async function main() {
     create: {
       email: 'admin@alwaheed-stone.com',
       name: 'المهندس مدير النظام - الوحيد',
-      phone: '+967770663641',
+      phone: '+967777360681',
       passwordHash: hashedPassword,
       role: 'SUPER_ADMIN',
       isActive: true,
@@ -32,8 +32,8 @@ async function main() {
   const settings = [
     { key: 'STORE_NAME_AR', value: 'مؤسسة الوحيد للزخرفة المعمارية ونحت والمقاولات العامة', group: 'GENERAL', description: 'الاسم الرسمي للمؤسسة بالعربية' },
     { key: 'STORE_NAME_EN', value: 'Al-Waheed for Architectural Ornamentation, Stone Carving & General Contracting', group: 'GENERAL', description: 'الاسم الرسمي بالإنجليزية' },
-    { key: 'STORE_PHONE', value: '+967770663641', group: 'CONTACT', description: 'رقم الهاتف المباشر للاتصال والاستفسار' },
-    { key: 'STORE_WHATSAPP', value: '+967770663641', group: 'CONTACT', description: 'رقم الواتساب الرسمي للمبيعات والتسعير' },
+    { key: 'STORE_PHONE', value: '+967777360681', group: 'CONTACT', description: 'رقم الهاتف المباشر للاتصال والاستفسار' },
+    { key: 'STORE_WHATSAPP', value: '+967777360681', group: 'CONTACT', description: 'رقم الواتساب الرسمي للمبيعات والتسعير' },
     { key: 'STORE_LOCATION', value: 'حده - فج عطان، صنعاء، الجمهورية اليمنية', group: 'CONTACT', description: 'الموقع الجغرافي للمقر والورش' },
     { key: 'STORE_CURRENCY', value: 'YER', group: 'GENERAL', description: 'العملة الافتراضية لعرض الأسعار' },
     { key: 'BUSINESS_HOURS', value: 'السبت - الخميس: 8:00 صباحاً - 8:00 مساءً | الجمعة: إجازة أسبوعية', group: 'GENERAL', description: 'ساعات العمل الرسمية' },

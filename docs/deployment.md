@@ -45,8 +45,8 @@ S3_SECRET_KEY=
 # Verified Store Settings Defaults
 STORE_NAME_AR=مؤسسة الوحيد للزخرفة المعمارية ونحت والمقاولات العامة
 STORE_NAME_EN=Al-Waheed for Architectural Ornamentation & Stone Carving
-STORE_PHONE=+967770663641
-STORE_WHATSAPP=+967770663641
+STORE_PHONE=+967777360681
+STORE_WHATSAPP=+967777360681
 STORE_LOCATION=حده - فج عطان، صنعاء، الجمهورية اليمنية
 STORE_CURRENCY=YER
 ```

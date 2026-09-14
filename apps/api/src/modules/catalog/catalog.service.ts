@@ -36,7 +36,7 @@ export class CatalogService {
     }
 
     if (query.isFeatured !== undefined) {
-      where.isFeatured = query.isFeatured;
+      where.isFeatured = String(query.isFeatured) === 'true';
     }
 
     if (query.search) {

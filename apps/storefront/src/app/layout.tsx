@@ -61,7 +61,7 @@ export default function RootLayout({
     '@type': 'LocalBusiness',
     name: 'مؤسسة الوحيد للزخرفة المعمارية ونحت والمقاولات العامة',
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-    telephone: '+967770663641',
+    telephone: '+967777360681',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'حده - فج عطان',

@@ -30,7 +30,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   if (!project) notFound();
 
   const whatsAppUrl = buildWhatsAppInquiryUrl({
-    phone: '967770663641',
+    phone: '967777360681',
     projectTitle: project.titleAr,
     url: `http://localhost:3000/projects/${project.slug}`,
   });

@@ -4,7 +4,7 @@ import React from 'react';
 import { MessageSquare } from 'lucide-react';
 
 export const WhatsAppFloatingButton: React.FC = () => {
-  const phone = '967770663641';
+  const phone = '967777360681';
   const message = encodeURIComponent(
     'السلام عليكم ورحمة الله وبركاته، أود الاستفسار عن أعمال ونقوش الحجر والواجهات وتفاصيل الأسعار لدى مؤسسة الوحيد للزخرفة المعمارية.'
   );
