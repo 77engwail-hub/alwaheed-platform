@@ -22,6 +22,9 @@ export default function AdminLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className={tajawal.variable}>
+      <head>
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+      </head>
       <body>
         <AdminShell>{children}</AdminShell>
       </body>

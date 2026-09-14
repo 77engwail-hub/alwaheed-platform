@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Outer Architectural Stone Shield -->
+  <rect width="64" height="64" rx="16" fill="#1c1917" />
+  <rect x="2" y="2" width="60" height="60" rx="14" stroke="#d4af37" stroke-width="1.5" stroke-opacity="0.6" />
+  
+  <!-- Classic Roman/Islamic Stone Arch -->
+  <path d="M18 48V28C18 20.268 24.268 14 32 14C39.732 14 46 20.268 46 28V48" stroke="#d4af37" stroke-width="3" stroke-linecap="round" />
+  
+  <!-- Keystone / Crown Ornament -->
+  <polygon points="32,10 35,16 29,16" fill="#d4af37" />
+  
+  <!-- Inner Column Details & Carving -->
+  <line x1="24" y1="28" x2="24" y2="48" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
+  <line x1="40" y1="28" x2="40" y2="48" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
+  <line x1="14" y1="48" x2="50" y2="48" stroke="#d4af37" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="12" y1="52" x2="52" y2="52" stroke="#d4af37" stroke-width="2" stroke-linecap="round" />
+
+  <!-- Center Diamond Sparkle -->
+  <polygon points="32,24 35,28 32,32 29,28" fill="#d4af37" />
+</svg>

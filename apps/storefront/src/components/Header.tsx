@@ -13,6 +13,7 @@ import {
   Layers,
   Sparkles,
   ShoppingBag,
+  User,
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -23,10 +24,11 @@ export const Header: React.FC = () => {
       {/* Top Bar for Verified Contact */}
       <div className="bg-stone-950/80 px-4 py-1.5 text-xs text-stone-300 border-b border-stone-800/60">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-gold">
-              <Compass className="w-3.5 h-3.5" />
-              <span>صنعاء: حده - فج عطان | ورش التشكيل والنحت والمعارض</span>
+          <div className="flex items-center gap-2">
+            <span className="text-gold font-bold">مؤسسة الوحيد</span>
+            <span className="hidden sm:inline text-stone-400">|</span>
+            <span className="hidden sm:inline text-stone-400">
+              للأحجار الطبيعية والرخام والزخرفة المعمارية - صنعاء
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -54,45 +56,53 @@ export const Header: React.FC = () => {
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Brand Logo & Title */}
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-lg bg-stone-800 border border-gold/40 flex items-center justify-center text-gold shadow-gold-glow group-hover:border-gold transition-all">
+            <div className="w-11 h-11 rounded-xl bg-stone-950 border border-gold/40 flex items-center justify-center text-gold shadow-gold-glow group-hover:scale-105 transition-all">
               <Sparkles className="w-6 h-6" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-lg sm:text-xl font-bold tracking-tight text-stone-100 group-hover:text-gold transition-colors">
-                الوحيد للزخرفة المعمارية
+            <div>
+              <span className="text-lg sm:text-xl font-extrabold tracking-tight text-stone-100 block group-hover:text-gold transition-colors">
+                الوحيد للزخرفة
               </span>
-              <span className="text-xs text-gold/80 font-medium tracking-wide">
-                نحت الأحجار الطبيعية والرخام والمقاولات
+              <span className="text-[11px] text-stone-400 font-medium tracking-wide block">
+                للنحت والمعمار والمقاولات
               </span>
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-stone-200">
-            <Link href="/" className="hover:text-gold transition-colors">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
+            <Link href="/" className="text-stone-200 hover:text-gold transition-colors py-1">
               الرئيسية
             </Link>
-            <Link href="/products" className="hover:text-gold transition-colors">
-              أحجار البناء والمنتجات
+            <Link href="/products" className="text-stone-200 hover:text-gold transition-colors py-1">
+              أحجار البناء
             </Link>
-            <Link href="/projects" className="hover:text-gold transition-colors">
-              المشاريع والأعمال
+            <Link href="/projects" className="text-stone-200 hover:text-gold transition-colors py-1">
+              المشاريع المنفذة
             </Link>
-            <Link href="/services" className="hover:text-gold transition-colors">
+            <Link href="/services" className="text-stone-200 hover:text-gold transition-colors py-1">
               خدماتنا
             </Link>
-            <Link href="/about" className="hover:text-gold transition-colors">
+            <Link href="/about" className="text-stone-200 hover:text-gold transition-colors py-1">
               عن المؤسسة
             </Link>
-            <Link href="/contact" className="hover:text-gold transition-colors">
+            <Link href="/contact" className="text-stone-200 hover:text-gold transition-colors py-1">
               تواصل معنا
             </Link>
           </nav>
 
           {/* Action CTAs */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2.5">
+            <Link
+              href="/login"
+              className="text-xs text-stone-300 hover:text-gold flex items-center gap-1.5 py-2 px-3 rounded-lg hover:bg-stone-800/80 transition-all border border-stone-700/60"
+              title="دخول حساب العميل"
+            >
+              <User className="w-3.5 h-3.5 text-gold" />
+              <span>دخول / حسابي</span>
+            </Link>
             <Link
               href="/rfq/track"
               className="text-xs text-stone-300 hover:text-gold flex items-center gap-1 py-2 px-3 rounded-md hover:bg-stone-800/80 transition-all border border-stone-700/60"
