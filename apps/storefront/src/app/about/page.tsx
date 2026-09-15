@@ -58,9 +58,9 @@ export default function AboutPage() {
             <div className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <h3 className="text-sm font-bold text-stone-800">حرفية يدوية وهندسية متقنة</h3>
+                <h3 className="text-sm font-bold text-stone-800">نحت آلي بمكائن CNC والمخارط الحديثة</h3>
                 <p className="text-xs text-stone-500">
-                  نحت ثلاثي الأبعاد بارز وغائر يعكس عمق الزخرفة الأندلسية والإسلامية والكلاسيكية.
+                  نحت ثلاثي الأبعاد بارز وغائر بدقة متناهية يعكس عمق الزخرفة الأندلسية والإسلامية والكلاسيكية.
                 </p>
               </div>
             </div>

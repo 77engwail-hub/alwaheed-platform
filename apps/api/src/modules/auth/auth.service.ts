@@ -124,6 +124,84 @@ export class AuthService {
     };
   }
 
+  static async socialLogin(
+    input: { provider: string; email?: string; name?: string; phone?: string; avatar?: string },
+    ipAddress?: string
+  ) {
+    const providerNameMap: Record<string, string> = {
+      google: 'Google',
+      facebook: 'Facebook',
+      twitter: 'X (Twitter)',
+      apple: 'Apple ID',
+      whatsapp: 'WhatsApp',
+    };
+
+    const email = input.email || `${input.provider}.user@alwaheed-stone.com`;
+    const name = input.name || `مستخدم ${providerNameMap[input.provider] || input.provider}`;
+
+    let user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email },
+          ...(input.phone ? [{ phone: input.phone }] : []),
+        ],
+      },
+    });
+
+    if (!user) {
+      const dummyPasswordHash = await bcrypt.hash(`SocialOAuth_${input.provider}_${Date.now()}`, 10);
+      user = await prisma.user.create({
+        data: {
+          email,
+          name,
+          phone: input.phone || null,
+          passwordHash: dummyPasswordHash,
+          role: 'CUSTOMER',
+          isActive: true,
+        },
+      });
+    }
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { lastLoginAt: new Date() },
+    });
+
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role as RoleType,
+      },
+      JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    await AuditService.log({
+      userId: user.id,
+      userEmail: user.email,
+      action: `SOCIAL_LOGIN_${input.provider.toUpperCase()}`,
+      entityType: 'User',
+      entityId: user.id,
+      ipAddress,
+    });
+
+    return {
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        phone: user.phone,
+        role: user.role,
+        isActive: user.isActive,
+        createdAt: user.createdAt,
+      },
+      message: `تم تسجيل الدخول بنجاح عبر ${providerNameMap[input.provider] || input.provider}`,
+    };
+  }
+
   static async getProfile(userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId },

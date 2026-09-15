@@ -20,7 +20,7 @@ const GALLERY_ITEMS = [
     category: 'carvings',
     categoryLabel: 'تيجان وأعمدة',
     image: 'https://images.unsplash.com/photo-1541888946425-d0fbb18f15f6?auto=format&fit=crop&w=1200&q=85',
-    desc: 'نحت يدوي فائق الدقة لتيجان كورنثية كلاسيكية مع أعمدة مبرومة.',
+    desc: 'نحت وتشكيل آلي فائق الدقة بمكائن CNC ومخارط الأعمدة المبرومة والمضلعة.',
     location: 'صنعاء',
   },
   {

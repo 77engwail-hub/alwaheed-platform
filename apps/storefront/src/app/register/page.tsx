@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { UserPlus, Mail, Lock, Phone, User, CheckCircle2, AlertCircle, ArrowLeft, Sparkles } from 'lucide-react';
+import { UserPlus, Mail, Lock, Phone, User, CheckCircle2, AlertCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import SocialAuthButtons from '@/components/SocialAuthButtons';
 
 export default function CustomerRegisterPage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function CustomerRegisterPage() {
     confirmPassword: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -36,8 +38,10 @@ export default function CustomerRegisterPage() {
     setIsLoading(true);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const res = await fetch(`${apiUrl}/auth/register`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const endpoint = `${apiUrl}/api/v1/auth/register`;
+
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -54,8 +58,10 @@ export default function CustomerRegisterPage() {
       }
 
       // Save customer session
-      localStorage.setItem('alwaheed_customer_token', data.data.token);
-      localStorage.setItem('alwaheed_customer_user', JSON.stringify(data.data.user));
+      if (data?.data?.token) {
+        localStorage.setItem('alwaheed_customer_token', data.data.token);
+        localStorage.setItem('alwaheed_customer_user', JSON.stringify(data.data.user));
+      }
 
       setSuccess(true);
       setTimeout(() => {
@@ -69,8 +75,8 @@ export default function CustomerRegisterPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-16">
-      <div className="bg-white rounded-3xl p-8 border border-stone-200 shadow-stone-md space-y-6">
+    <div className="max-w-md mx-auto px-4 py-12 sm:py-16">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-stone-md space-y-6">
         <div className="text-center space-y-2">
           <div className="w-12 h-12 rounded-2xl bg-stone-900 text-gold flex items-center justify-center mx-auto shadow-gold-glow">
             <UserPlus className="w-6 h-6" />
@@ -94,6 +100,17 @@ export default function CustomerRegisterPage() {
             <span>تم إنشاء حسابك بنجاح! جاري تحويلك لحسابك...</span>
           </div>
         )}
+
+        {/* Social / OAuth 1-Click Fast Register */}
+        <SocialAuthButtons mode="register" />
+
+        <div className="relative flex items-center justify-center pt-2">
+          <div className="border-t border-stone-200 w-full" />
+          <span className="bg-white px-3 text-[11px] font-medium text-stone-400 shrink-0">
+            أو التسجيل اليدوي بالبيانات
+          </span>
+          <div className="border-t border-stone-200 w-full" />
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div className="space-y-1">
@@ -120,7 +137,7 @@ export default function CustomerRegisterPage() {
                 placeholder="name@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none font-mono text-stone-900"
+                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
               />
               <Mail className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
             </div>
@@ -134,7 +151,7 @@ export default function CustomerRegisterPage() {
                 placeholder="777360681"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none font-mono text-stone-900"
+                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
               />
               <Phone className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
             </div>
@@ -144,14 +161,21 @@ export default function CustomerRegisterPage() {
             <label className="font-bold text-stone-700">كلمة المرور *</label>
             <div className="relative">
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
+                className="w-full pl-10 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
               />
               <Lock className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-3.5 left-3.5 text-stone-400 hover:text-stone-600 focus:outline-none"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
             </div>
           </div>
 
@@ -159,12 +183,12 @@ export default function CustomerRegisterPage() {
             <label className="font-bold text-stone-700">تأكيد كلمة المرور *</label>
             <div className="relative">
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 placeholder="••••••••"
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
+                className="w-full pl-10 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
               />
               <Lock className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
             </div>
@@ -173,7 +197,7 @@ export default function CustomerRegisterPage() {
           <button
             type="submit"
             disabled={isLoading || success}
-            className="w-full bg-gold hover:bg-gold-dark text-stone-950 font-bold py-3.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2"
+            className="w-full bg-gold hover:bg-gold-dark text-stone-950 font-bold py-3.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-60"
           >
             <span>{isLoading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب الآن'}</span>
             <ArrowLeft className="w-4 h-4" />

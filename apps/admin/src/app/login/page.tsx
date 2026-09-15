@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Sparkles, Lock, Mail, AlertCircle, ArrowLeft } from 'lucide-react';
+import { Sparkles, Lock, Mail, AlertCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { setAdminToken } from '../../lib/admin-api';
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -18,8 +19,10 @@ export default function AdminLoginPage() {
     setError('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const res = await fetch(`${apiUrl}/auth/login`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const endpoint = `${apiUrl}/api/v1/auth/login`;
+
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -78,21 +81,28 @@ export default function AdminLoginPage() {
             <label className="text-xs font-bold text-stone-300">كلمة المرور</label>
             <div className="relative">
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-stone-950 border border-stone-800 text-stone-100 px-4 py-3 pr-10 rounded-xl text-sm focus:border-gold focus:ring-1 focus:ring-gold outline-none placeholder:text-stone-600"
+                className="w-full bg-stone-950 border border-stone-800 text-stone-100 px-4 py-3 pr-10 pl-10 rounded-xl text-sm focus:border-gold focus:ring-1 focus:ring-gold outline-none placeholder:text-stone-600"
               />
               <Lock className="w-4 h-4 text-stone-500 absolute top-3.5 right-3.5" />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-3.5 left-3.5 text-stone-500 hover:text-stone-300 focus:outline-none"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
             </div>
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gold hover:bg-gold-dark text-stone-950 font-bold py-3.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2"
+            className="w-full bg-gold hover:bg-gold-dark text-stone-950 font-bold py-3.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 active:scale-[0.99]"
           >
             <span>{isLoading ? 'جاري التحقق...' : 'دخول لوحة الإدارة'}</span>
             <ArrowLeft className="w-4 h-4" />

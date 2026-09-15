@@ -215,7 +215,7 @@ export default async function HomePage() {
             معايير الجودة والأصالة الحجرية
           </h2>
           <p className="text-xs sm:text-sm text-stone-500">
-            نجمع بين مهارات النحت اليدوي التراثي وأحدث تقنيات القص والتشكيل الهندسي
+            نجمع بين أحدث تقنيات النحت بالمكائن الآلية الحديثة CNC والمخارط الرقمية وأصالة الحجر اليمني الطبيعي
           </p>
         </div>
 
@@ -234,9 +234,9 @@ export default async function HomePage() {
             <div className="w-10 h-10 rounded-xl bg-stone-100 flex items-center justify-center text-gold-dark border border-stone-200">
               <Hammer className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-stone-900">نحاتون محترفون</h3>
+            <h3 className="text-sm font-bold text-stone-900">نحت آلي وهندسي (CNC)</h3>
             <p className="text-xs text-stone-500 leading-relaxed">
-              نخبة من أمهر معلمين النحت والزخرفة المعمارية القادرين على تحويل أي تصميم أو صورة إلى نقش حجري بارز.
+              أحدث مكائن النحت الآلية CNC والمخارط الرقمية القادرة على تنفيذ أدق المخططات والزخارف المعمارية الملكية.
             </p>
           </div>
 

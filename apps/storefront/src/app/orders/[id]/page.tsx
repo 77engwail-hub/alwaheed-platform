@@ -261,7 +261,7 @@ export default function OrderTrackingAndPaymentPage() {
               <span className="font-bold text-stone-900 dark:text-stone-100 block">
                 أحجار واجهات معمارية منحوتة وتيجان أعمدة
               </span>
-              <span className="text-[11px] text-stone-500">حجر طبيعي - تصنيع ونحت يدوي وآلي</span>
+              <span className="text-[11px] text-stone-500">حجر طبيعي - قص وتشكيل ونحت آلي بمكائن CNC والمخارط</span>
             </div>
             <span className="font-mono font-extrabold text-stone-900 dark:text-stone-100">
               {formatPrice(expectedAmount, currency)}

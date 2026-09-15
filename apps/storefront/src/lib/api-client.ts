@@ -1,7 +1,20 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  // In browser, relative URL avoids cross-origin and private network access restrictions
+  if (typeof window !== 'undefined') {
+    return '/api/v1';
+  }
+  // Server-side (Node.js runtime) requires absolute URL
+  return 'http://127.0.0.1:4000/api/v1';
+};
 
 export async function fetchApi<T = any>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  const baseUrl = getApiBaseUrl();
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const url = `${baseUrl}${cleanEndpoint}`;
+
   const headers = {
     'Content-Type': 'application/json',
     ...(options.headers || {}),

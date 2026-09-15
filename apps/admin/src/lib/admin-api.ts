@@ -1,4 +1,12 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  if (typeof window !== 'undefined') {
+    return '/api/v1';
+  }
+  return process.env.NODE_ENV === 'production' ? '/api/v1' : 'http://localhost:4000/api/v1';
+};
 
 export function getAdminToken(): string | null {
   if (typeof window === 'undefined') return null;
@@ -20,7 +28,9 @@ export function removeAdminToken() {
 
 export async function adminFetch<T = any>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = getAdminToken();
-  const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  const baseUrl = getApiBaseUrl();
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const url = `${baseUrl}${cleanEndpoint}`;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',

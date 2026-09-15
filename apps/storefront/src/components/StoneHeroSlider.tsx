@@ -19,7 +19,7 @@ const SLIDES = [
     subtitle: 'تشكيل تيجان كورنثية وإسلامية، أعمدة مبرومة ومضلعة، وإطارات شبابيك ومشربيات حجرية بدقة متناهية تحاكي الفخامة التاريخية.',
     tag: 'نحت وزخرفة معمارية',
     image: 'https://images.unsplash.com/photo-1541888946425-d0fbb18f15f6?auto=format&fit=crop&w=1920&q=85',
-    accent: 'نحت يدوي وآلي فائق الدقة',
+    accent: 'نحت آلي بالمكائن الحديثة CNC والمخارط',
   },
   {
     id: 3,
@@ -118,7 +118,7 @@ export const StoneHeroSlider: React.FC = () => {
             </div>
             <div className="flex items-center gap-1.5">
               <Award className="w-3.5 h-3.5 text-gold shrink-0" />
-              <span className="text-[11px] sm:text-xs">نحت يدوي وهندسي</span>
+              <span className="text-[11px] sm:text-xs">نحت آلي CNC ومخارط</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5 text-gold shrink-0" />

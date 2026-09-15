@@ -44,9 +44,9 @@ export const DICTIONARY: Record<LanguageCode, Record<string, string>> = {
     'nav.language': 'اللغة',
 
     // Hero & Home
-    'hero.badge': 'رواد النحت الحجري والمعمار اليمني الأصيل',
+    'hero.badge': 'رواد النحت الحجري والمعمار بالمكائن الآلية الحديثة CNC',
     'hero.title': 'فخامة الحجر الطبيعي ونقوش معمارية خالدة',
-    'hero.subtitle': 'واجهات حجرية يمنية ملكية، تيجان أعمدة، ونحت يدوي متقن يجمع بين أصالة التراث ودقة المعمار الحديث.',
+    'hero.subtitle': 'واجهات حجرية يمنية ملكية، تيجان أعمدة، ونحت بالمكائن الآلية الحديثة CNC والمخارط المتقدمة يجمع بين أصالة التراث ودقة المعمار الحديث.',
     'hero.cta.rfq': 'اطلب عرض سعر هندسي ↗',
     'hero.cta.catalog': 'استكشف كتالوج الأحجار',
     'hero.stats.projects': '+500 مشروع منجز',
@@ -84,7 +84,7 @@ export const DICTIONARY: Record<LanguageCode, Record<string, string>> = {
     // Brand & Header
     'brand.name': 'Al-Waheed Stone & Architectural Carving',
     'brand.shortName': 'Al-Waheed Stone',
-    'brand.tagline': 'Architectural Carving & Masonry',
+    'brand.tagline': 'Architectural Carving, CNC Machining & Masonry',
     'brand.location': "Sana'a - Faj Attan",
     'brand.phone': '+967 777 360 681',
     'brand.whatsapp': 'WhatsApp',
@@ -105,9 +105,9 @@ export const DICTIONARY: Record<LanguageCode, Record<string, string>> = {
     'nav.language': 'Language',
 
     // Hero & Home
-    'hero.badge': 'Pioneers in Architectural Stone Carving & Natural Masonry',
-    'hero.title': 'Luxury Natural Stone & Timeless Carving Artistry',
-    'hero.subtitle': 'Royal Yemeni stone facades, hand-carved column capitals, and heritage ornaments combining authentic history with modern architectural precision.',
+    'hero.badge': 'Pioneers in Architectural Stone CNC Carving & Natural Masonry',
+    'hero.title': 'Luxury Natural Stone & Timeless CNC Carving Artistry',
+    'hero.subtitle': 'Royal Yemeni stone facades, column capitals carved with advanced automated CNC machinery & lathes, combining authentic history with modern architectural precision.',
     'hero.cta.rfq': 'Request Architectural Quote ↗',
     'hero.cta.catalog': 'Explore Stone Catalog',
     'hero.stats.projects': '500+ Completed Projects',
@@ -143,9 +143,9 @@ export const DICTIONARY: Record<LanguageCode, Record<string, string>> = {
 
   tr: {
     // Brand & Header
-    'brand.name': 'Al-Waheed Mimari Taş ve Oyma Sanatı',
+    'brand.name': 'Al-Waheed Mimari Taş ve CNC Oyma Sanatı',
     'brand.shortName': 'Al-Waheed Taş',
-    'brand.tagline': 'Mimari Oyma ve Taş İşçiliği',
+    'brand.tagline': 'Mimari CNC Oyma ve Taş İşçiliği',
     'brand.location': "Sana'a - Faj Attan",
     'brand.phone': '+967 777 360 681',
     'brand.whatsapp': 'WhatsApp',
@@ -166,9 +166,9 @@ export const DICTIONARY: Record<LanguageCode, Record<string, string>> = {
     'nav.language': 'Dil',
 
     // Hero & Home
-    'hero.badge': 'Mimari Taş Oymacılığı ve Doğal Taş Duvarcılığında Öncü',
-    'hero.title': 'Lüks Doğal Taş ve Zamansız Mimari Oyma Sanatı',
-    'hero.subtitle': 'Kraliyet Yemen taş cepheleri, el oyması sütun başlıkları ve tarihi miras ile modern mimari hassasiyetini birleştiren süslemeler.',
+    'hero.badge': 'Mimari Taş CNC Oymacılığı ve Doğal Taş Duvarcılığında Öncü',
+    'hero.title': 'Lüks Doğal Taş ve Zamansız Mimari CNC Oyma Sanatı',
+    'hero.subtitle': 'Kraliyet Yemen taş cepheleri, modern CNC makineleri ve torna tezgahlarıyla oyulmuş sütun başlıkları ve tarihi miras ile modern mimari hassasiyetini birleştiren süslemeler.',
     'hero.cta.rfq': 'Mimari Teklif İsteyin ↗',
     'hero.cta.catalog': 'Taş Kataloğunu İncele',
     'hero.stats.projects': '500+ Tamamlanan Proje',
@@ -204,9 +204,9 @@ export const DICTIONARY: Record<LanguageCode, Record<string, string>> = {
 
   zh: {
     // Brand & Header
-    'brand.name': 'Al-Waheed 建筑石材与手工雕刻工坊',
+    'brand.name': 'Al-Waheed 建筑石材与CNC数控雕刻工坊',
     'brand.shortName': 'Al-Waheed 石材',
-    'brand.tagline': '建筑雕刻与石雕艺术',
+    'brand.tagline': '建筑数控雕刻与石雕艺术',
     'brand.location': '也门萨那 - 法吉阿坦 (Faj Attan)',
     'brand.phone': '+967 777 360 681',
     'brand.whatsapp': 'WhatsApp 联系',
@@ -227,9 +227,9 @@ export const DICTIONARY: Record<LanguageCode, Record<string, string>> = {
     'nav.language': '语言',
 
     // Hero & Home
-    'hero.badge': '建筑石雕与也门天然石材领军品牌',
-    'hero.title': '尊贵天然石材与永恒建筑雕刻艺术',
-    'hero.subtitle': '顶级也门石材外墙、手工雕刻罗马柱与柱头、融合千年历史遗产与现代建筑精工。',
+    'hero.badge': '建筑石雕与也门天然石材数控加工领军品牌',
+    'hero.title': '尊贵天然石材与永恒建筑数控雕刻艺术',
+    'hero.subtitle': '顶级也门石材外墙、现代CNC数控机床与精密车床石雕、罗马柱与柱头，融合千年历史遗产与现代建筑精工。',
     'hero.cta.rfq': '获取工程设计报价 ↗',
     'hero.cta.catalog': '浏览石材样本库',
     'hero.stats.projects': '500+ 已交付工程',

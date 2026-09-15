@@ -30,8 +30,8 @@ function RfqTrackingContent() {
     setQuotation(null);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const res = await fetch(`${apiUrl}/quotations/track/${ref.trim()}`);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/v1/quotations/track/${ref.trim()}`);
       const data = await res.json();
 
       if (!res.ok) {

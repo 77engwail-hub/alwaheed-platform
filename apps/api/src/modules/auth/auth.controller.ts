@@ -54,6 +54,34 @@ authRouter.post('/register', async (req: Request, res: Response) => {
   }
 });
 
+// 2.1 One-Click Social Login (Google, Facebook, Twitter, Apple, WhatsApp)
+authRouter.post('/social-login', async (req: Request, res: Response) => {
+  try {
+    const { provider, email, name, phone, avatar } = req.body;
+    if (!provider) {
+      return res.status(400).json({
+        success: false,
+        error: { code: 'INVALID_PROVIDER', message: 'يرجى تحديد مزود المصادقة السريعة' },
+      });
+    }
+
+    const ip = req.ip || req.socket.remoteAddress;
+    const result = await AuthService.socialLogin({ provider, email, name, phone, avatar }, ip);
+    return res.json({
+      success: true,
+      data: result,
+    });
+  } catch (err: any) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        code: 'SOCIAL_LOGIN_FAILED',
+        message: err.message || 'فشل تسجيل الدخول عبر المزود',
+      },
+    });
+  }
+});
+
 // 3. Get Current User Profile
 authRouter.get('/me', authenticateToken, async (req: Request, res: Response) => {
   try {

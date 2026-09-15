@@ -83,7 +83,7 @@ const INITIAL_ADMIN_POSTS: Post[] = [
     images: [
       'https://images.unsplash.com/photo-1541888946425-d0fbb18f15f6?auto=format&fit=crop&w=1200&q=85',
     ],
-    tags: ['تيجان_رومانية', 'نحت_يدوي', 'مشاريع_صنعاء'],
+    tags: ['تيجان_رومانية', 'نحت_آلي_CNC', 'مخارط_حجرية', 'مشاريع_صنعاء'],
     likesCount: 56,
     commentsCount: 1,
     isPinned: false,

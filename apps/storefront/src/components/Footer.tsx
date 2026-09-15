@@ -46,7 +46,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link href="/products?category=carvings-motifs" className="hover:text-gold transition-colors">
-                  نقوش وزخارف حجرية يدوية
+                  نقوش وزخارف حجرية بمكائن CNC والمخارط
                 </Link>
               </li>
               <li>

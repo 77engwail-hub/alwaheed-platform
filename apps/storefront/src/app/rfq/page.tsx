@@ -57,8 +57,8 @@ function RfqPageContent() {
       uploadFormData.append('file', file);
       uploadFormData.append('category', 'BLUEPRINTS');
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const res = await fetch(`${apiUrl}/media/upload`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/v1/media/upload`, {
         method: 'POST',
         body: uploadFormData,
       });
@@ -88,7 +88,7 @@ function RfqPageContent() {
     setErrorMessage('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
 
       const payload = {
         customerName: formData.customerName,
@@ -114,7 +114,7 @@ function RfqPageContent() {
         attachments,
       };
 
-      const res = await fetch(`${apiUrl}/quotations`, {
+      const res = await fetch(`${apiUrl}/api/v1/quotations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
