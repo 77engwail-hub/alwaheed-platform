@@ -23,6 +23,7 @@ import {
   ArrowRight,
   Activity,
   Layers,
+  Users,
 } from 'lucide-react';
 import { adminFetch, getAdminToken, removeAdminToken } from '../../lib/admin-api';
 
@@ -152,14 +153,14 @@ export default function AdminProfilePage() {
   return (
     <div className="max-w-4xl space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-stone-200/60 sm:border-none">
         <div>
           <div className="inline-flex items-center gap-2 text-xs text-gold font-bold mb-1">
             <ShieldCheck className="w-4 h-4" />
             <span>إعدادات حساب الإدارة والأمان</span>
           </div>
-          <h1 className="text-2xl font-extrabold text-stone-900">الملف الشخصي والحماية الإدارية</h1>
-          <p className="text-xs text-stone-500">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">الملف الشخصي والحماية الإدارية</h1>
+          <p className="text-xs text-stone-500 mt-0.5">
             تعديل بيانات المسؤول، تغيير كلمة المرور، مراجعة سجلات تسجيل الدخول، والتحكم في جلسات الأمان.
           </p>
         </div>
@@ -167,35 +168,34 @@ export default function AdminProfilePage() {
         <div className="flex items-center gap-3">
           <Link
             href="/users"
-            className="bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all"
+            className="w-full sm:w-auto bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all"
           >
-            <UsersIcon className="w-4 h-4" />
+            <Users className="w-4 h-4" />
             <span>إدارة جميع المستخدمين</span>
           </Link>
         </div>
       </div>
 
       {/* Admin Card */}
-      <div className="bg-stone-950 text-stone-100 rounded-3xl p-6 border border-stone-800 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-stone-900 border border-gold/40 flex items-center justify-center text-gold font-extrabold text-xl shadow-gold-glow">
-            {name ? name.slice(0, 2) : 'AD'}
+      <div className="bg-stone-950 text-stone-100 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-stone-800 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-stone-900 border border-gold/40 flex items-center justify-center text-gold shadow-gold-glow text-lg font-bold shrink-0">
+            {user?.name ? user.name.slice(0, 2) : 'A'}
           </div>
-          <div className="space-y-1">
+          <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-stone-100">{name || 'مدير النظام'}</h2>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gold/20 text-gold border border-gold/40">
+              <h2 className="text-base sm:text-lg font-bold text-white">{name || 'مدير النظام'}</h2>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gold/20 text-gold border border-gold/40">
                 {user?.role || 'SUPER_ADMIN'}
               </span>
             </div>
-            <p className="text-xs text-stone-400 font-mono" dir="ltr">{email}</p>
-            {phone && <p className="text-xs text-stone-400 font-mono" dir="ltr">{phone}</p>}
+            <span className="text-xs text-stone-400 font-mono block mt-0.5">{email}</span>
           </div>
         </div>
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-rose-400 hover:bg-rose-500/10 border border-rose-500/30 transition-colors self-start sm:self-auto"
+          className="self-start sm:self-auto flex items-center gap-2 text-xs font-bold text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 px-3.5 py-2 rounded-xl border border-rose-900/40 transition-colors"
         >
           <LogOut className="w-4 h-4" />
           <span>تسجيل الخروج</span>
@@ -221,13 +221,13 @@ export default function AdminProfilePage() {
       )}
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-stone-200 pb-2">
+      <div className="flex flex-wrap sm:flex-nowrap items-center gap-1.5 sm:gap-2 border-b border-stone-200 pb-2">
         <button
           onClick={() => {
             setActiveTab('profile');
             setFeedback(null);
           }}
-          className={`px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-2 transition-all ${
+          className={`flex-1 sm:flex-none justify-center px-3 sm:px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 sm:gap-2 transition-all ${
             activeTab === 'profile'
               ? 'bg-gold text-stone-950 font-extrabold shadow-sm'
               : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
@@ -242,7 +242,7 @@ export default function AdminProfilePage() {
             setActiveTab('security');
             setFeedback(null);
           }}
-          className={`px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-2 transition-all ${
+          className={`flex-1 sm:flex-none justify-center px-3 sm:px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 sm:gap-2 transition-all ${
             activeTab === 'security'
               ? 'bg-gold text-stone-950 font-extrabold shadow-sm'
               : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
@@ -257,7 +257,7 @@ export default function AdminProfilePage() {
             setActiveTab('audit');
             setFeedback(null);
           }}
-          className={`px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-2 transition-all ${
+          className={`flex-1 sm:flex-none justify-center px-3 sm:px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 sm:gap-2 transition-all ${
             activeTab === 'audit'
               ? 'bg-gold text-stone-950 font-extrabold shadow-sm'
               : 'bg-stone-100 text-stone-600 hover:bg-stone-200'

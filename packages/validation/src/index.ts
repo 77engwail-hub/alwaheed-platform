@@ -4,10 +4,22 @@ import { z } from 'zod';
 // 1. Auth Schemas
 // ==============================================================================
 
-export const LoginSchema = z.object({
-  email: z.string().min(1, 'يرجى إدخال البريد الإلكتروني أو رقم الهاتف أو اسم المستخدم'),
-  password: z.string().min(6, 'كلمة المرور يجب أن لا تقل عن 6 أحرف'),
-});
+export const LoginSchema = z
+  .object({
+    email: z.string().optional(),
+    identifier: z.string().optional(),
+    username: z.string().optional(),
+    phone: z.string().optional(),
+    password: z.string().min(1, 'كلمة المرور مطلوبة'),
+  })
+  .transform((data) => ({
+    email: (data.email || data.identifier || data.username || data.phone || '').trim(),
+    password: data.password,
+  }))
+  .refine((data) => data.email.length > 0, {
+    message: 'يرجى إدخال البريد الإلكتروني أو رقم الهاتف أو اسم المستخدم',
+    path: ['email'],
+  });
 
 export type LoginInput = z.infer<typeof LoginSchema>;
 

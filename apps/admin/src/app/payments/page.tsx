@@ -197,94 +197,94 @@ export default function AdminPaymentsPage() {
   return (
     <div className="space-y-8">
       {/* Header & Quick Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs text-gold font-bold mb-1">
-            <ShieldCheck className="w-4 h-4" />
+          <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-gold font-bold mb-0.5">
+            <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>نظام التدقيق والتحقق الذكي من المحافظ اليمنية</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900">
+          <h1 className="text-lg sm:text-2xl lg:text-3xl font-extrabold text-stone-900">
             مركز التحقق والمدفوعات الإلكترونية
           </h1>
-          <p className="text-xs text-stone-500">
+          <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 max-w-xl">
             فحص ومطابقة إشعارات المحافظ (ون كاش، جوالي، فلوسك، كاش...) بالذكاء الاصطناعي واعتماد الدفعات.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
           <Link
             href="/settings/payment-providers"
-            className="bg-stone-900 hover:bg-stone-800 text-gold font-bold text-xs px-4 py-2.5 rounded-xl border border-gold/30 flex items-center gap-2 transition-all shadow-sm"
+            className="flex-1 sm:flex-none justify-center bg-stone-900 hover:bg-stone-800 text-gold font-bold text-xs px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-gold/30 flex items-center gap-1.5 transition-all shadow-sm"
           >
-            <Wallet className="w-4 h-4" />
-            <span>إدارة حسابات المحافظ</span>
+            <Wallet className="w-3.5 h-3.5" />
+            <span>حسابات المحافظ</span>
           </Link>
 
           <button
             onClick={handleExportCSV}
-            className="bg-white hover:bg-stone-50 text-stone-700 font-bold text-xs px-4 py-2.5 rounded-xl border border-stone-200 flex items-center gap-2 transition-all shadow-sm"
+            className="flex-1 sm:flex-none justify-center bg-white hover:bg-stone-50 text-stone-700 font-bold text-xs px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-stone-200 flex items-center gap-1.5 transition-all shadow-sm"
           >
-            <Download className="w-4 h-4" />
-            <span>تصدير تقرير Excel/CSV</span>
+            <Download className="w-3.5 h-3.5" />
+            <span>تصدير CSV</span>
           </button>
         </div>
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-stone-sm space-y-1">
-          <div className="flex items-center justify-between text-xs text-stone-500">
-            <span>مدفوعات اليوم</span>
-            <TrendingUp className="w-4 h-4 text-emerald-600" />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200 shadow-stone-sm space-y-1">
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-stone-500">
+            <span className="truncate">مدفوعات اليوم</span>
+            <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
           </div>
-          <div className="text-xl font-extrabold text-stone-900 font-mono">
+          <div className="text-base sm:text-xl font-extrabold text-stone-900 font-mono truncate">
             {formatPrice(stats?.todayPaymentsAmount || 150000, 'YER')}
           </div>
-          <p className="text-[11px] text-stone-400 font-medium">
+          <p className="text-[10px] sm:text-[11px] text-stone-400 font-medium truncate">
             {stats?.todayPaymentsCount || 1} عملية دفع اليوم
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-stone-sm space-y-1">
-          <div className="flex items-center justify-between text-xs text-stone-500">
-            <span>بانتظار الفحص والاعتماد</span>
-            <Clock className="w-4 h-4 text-amber-500" />
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200 shadow-stone-sm space-y-1">
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-stone-500">
+            <span className="truncate">بانتظار الفحص</span>
+            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 shrink-0" />
           </div>
-          <div className="text-xl font-extrabold text-amber-600 font-mono">
+          <div className="text-base sm:text-xl font-extrabold text-amber-600 font-mono truncate">
             {stats?.pendingVerificationCount || 1}
           </div>
-          <p className="text-[11px] text-stone-400 font-medium">تحتاج قرار المسؤول</p>
+          <p className="text-[10px] sm:text-[11px] text-stone-400 font-medium truncate">تحتاج قرار المسؤول</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-stone-sm space-y-1">
-          <div className="flex items-center justify-between text-xs text-stone-500">
-            <span>عمليات مؤكدة بالكامل</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200 shadow-stone-sm space-y-1">
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-stone-500">
+            <span className="truncate">عمليات مؤكدة</span>
+            <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
           </div>
-          <div className="text-xl font-extrabold text-emerald-600 font-mono">
+          <div className="text-base sm:text-xl font-extrabold text-emerald-600 font-mono truncate">
             {stats?.confirmedPaymentsCount || 2}
           </div>
-          <p className="text-[11px] text-stone-400 font-medium">تم تحديث رصيد الطلب</p>
+          <p className="text-[10px] sm:text-[11px] text-stone-400 font-medium truncate">تم تحديث رصيد الطلب</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-stone-200 shadow-stone-sm space-y-1">
-          <div className="flex items-center justify-between text-xs text-stone-500">
-            <span>إجمالي المحصل الفعلي</span>
-            <Sparkles className="w-4 h-4 text-gold" />
+        <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200 shadow-stone-sm space-y-1">
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-stone-500">
+            <span className="truncate">إجمالي المحصل</span>
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0" />
           </div>
-          <div className="text-xl font-extrabold text-gold font-mono">
+          <div className="text-base sm:text-xl font-extrabold text-gold font-mono truncate">
             {formatPrice(stats?.totalCollectedAmount || 350000, 'YER')}
           </div>
-          <p className="text-[11px] text-stone-400 font-medium">موزع عبر Allocations</p>
+          <p className="text-[10px] sm:text-[11px] text-stone-400 font-medium truncate">موزع عبر المحافظ</p>
         </div>
       </div>
 
       {/* Main Table & Filter Container */}
-      <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-stone-sm space-y-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 border border-stone-200 shadow-stone-sm space-y-4 sm:space-y-6">
         {/* Filter Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Status Tabs */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 no-scrollbar sm:flex-wrap">
             {[
               { key: 'ALL', label: 'الكل' },
               { key: 'AI_VERIFIED', label: 'تحقق آلي' },
@@ -295,7 +295,7 @@ export default function AdminPaymentsPage() {
               <button
                 key={tab.key}
                 onClick={() => setSelectedStatus(tab.key)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
                   selectedStatus === tab.key
                     ? 'bg-gold text-stone-950 shadow-sm'
                     : 'bg-stone-50 text-stone-600 hover:bg-stone-100'
@@ -307,15 +307,15 @@ export default function AdminPaymentsPage() {
           </div>
 
           {/* Search Input */}
-          <div className="relative">
+          <div className="relative w-full sm:w-64">
             <Search className="w-4 h-4 text-stone-400 absolute right-3 top-2.5" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && loadData()}
-              placeholder="بحث برقم المعاملة، الطلب، المرجع..."
-              className="bg-stone-50 border border-stone-200 rounded-xl pr-9 pl-3 py-2 text-xs text-stone-800 w-full sm:w-64"
+              placeholder="بحث برقم المعاملة، الطلب..."
+              className="bg-stone-50 border border-stone-200 rounded-xl pr-9 pl-3 py-2 text-xs text-stone-800 w-full"
             />
           </div>
         </div>
@@ -326,8 +326,8 @@ export default function AdminPaymentsPage() {
         ) : transactions.length === 0 ? (
           <div className="p-12 text-center text-xs text-stone-400">لا توجد معاملات دفع حالياً</div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-right text-xs">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-right text-xs min-w-[750px]">
               <thead className="bg-stone-50 text-stone-500 border-b border-stone-200 font-medium">
                 <tr>
                   <th className="p-3">رقم المعاملة</th>

@@ -3,38 +3,45 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { email, password } = body;
+    const identifier = body.email || body.identifier || body.username || body.phone;
+    const password = body.password;
 
-    if (!email || !password) {
+    if (!identifier || !password) {
       return NextResponse.json(
-        { success: false, error: { code: 'BAD_REQUEST', message: 'يرجى إدخال بيانات الدخول وكلمة المرور' } },
+        {
+          success: false,
+          error: {
+            code: 'BAD_REQUEST',
+            message: 'يرجى إدخال اسم المستخدم أو البريد الإلكتروني وكلمة المرور',
+          },
+        },
         { status: 400 }
       );
     }
 
-    const token = `alwaheed_admin_jwt_${Date.now()}`;
-    const user = {
-      id: 'usr_super_admin_001',
-      email: 'admin@alwaheed-stone.com',
-      name: 'المهندس / المدير العام (مؤسسة الوحيد)',
-      phone: '777360681',
-      role: 'SUPER_ADMIN',
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    return NextResponse.json({
-      success: true,
-      data: {
-        token,
-        user,
+    const apiUrl = process.env.API_URL || 'http://localhost:4000/api/v1';
+    const backendRes = await fetch(`${apiUrl}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ email: identifier, password }),
     });
+
+    const data = await backendRes.json();
+
+    return NextResponse.json(data, { status: backendRes.status });
   } catch (error: any) {
     return NextResponse.json(
-      { success: false, error: { code: 'SERVER_ERROR', message: error.message } },
+      {
+        success: false,
+        error: {
+          code: 'SERVER_ERROR',
+          message: error.message || 'حدث خطأ أثناء الاتصال بقاعدة البيانات',
+        },
+      },
       { status: 500 }
     );
   }
 }
+

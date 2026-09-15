@@ -3,11 +3,36 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+
   body {
     background-color: #F7F5F0;
     color: #1C1917;
     font-family: var(--font-tajawal), 'Tajawal', 'Cairo', sans-serif;
     direction: rtl;
     text-align: right;
+    overflow-x: hidden;
+    width: 100%;
+    min-width: 100%;
   }
+}
+
+/* Guardrail: ensure desktop sidebar is physically hidden on all mobile/tablet viewports (< 1024px) */
+@media (max-width: 1023.98px) {
+  .admin-desktop-sidebar {
+    display: none !important;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

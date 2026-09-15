@@ -8,25 +8,48 @@ import { AuditService } from '../audit/audit.service.js';
 
 export class AuthService {
   static async login(input: LoginInput, ipAddress?: string) {
-    const identifier = input.email.trim();
+    const rawIdentifier = input.email.trim();
+    const cleanPhone = rawIdentifier.replace(/[\s\-]/g, '');
+    const phoneNoCode = cleanPhone.replace(/^(\+967|00967|0)/, '');
+    const phoneVariants = [
+      rawIdentifier,
+      cleanPhone,
+      phoneNoCode,
+      `+967${phoneNoCode}`,
+      `00967${phoneNoCode}`,
+      `0${phoneNoCode}`,
+    ].filter(Boolean);
 
-    // Look up by email, phone number, or name / username
+    // Look up by email (exact/lowercase), phone variants, or username / name
     const user = await prisma.user.findFirst({
       where: {
         OR: [
-          { email: identifier },
-          { phone: identifier },
-          { name: identifier },
+          { email: rawIdentifier },
+          { email: rawIdentifier.toLowerCase() },
+          { phone: { in: phoneVariants } },
+          { name: rawIdentifier },
         ],
       },
     });
 
-    if (!user || !user.isActive) {
-      throw new Error('بيانات الدخول (البريد، الهاتف، أو اسم المستخدم) أو كلمة المرور غير صحيحة أو الحساب معطل');
+    if (!user) {
+      throw new Error('بيانات الدخول (البريد، الهاتف، أو اسم المستخدم) أو كلمة المرور غير صحيحة');
+    }
+
+    if (!user.isActive) {
+      throw new Error('تم تعطيل هذا الحساب. يرجى التواصل مع إدارة النظام للمساعدة');
     }
 
     const isValid = await bcrypt.compare(input.password, user.passwordHash);
     if (!isValid) {
+      await AuditService.log({
+        userId: user.id,
+        userEmail: user.email,
+        action: 'LOGIN_FAILED_WRONG_PASSWORD',
+        entityType: 'User',
+        entityId: user.id,
+        ipAddress,
+      }).catch(() => {});
       throw new Error('بيانات الدخول أو كلمة المرور غير صحيحة');
     }
 

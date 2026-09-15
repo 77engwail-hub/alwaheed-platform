@@ -23,19 +23,21 @@ export default function AdminOrdersPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-extrabold text-stone-900">إدارة أوامر الشراء المباشر</h1>
-        <p className="text-xs text-stone-500">متابعة شحنات وتوريد الأحجار الطبيعية المشتراة مباشرة من الموقع</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b border-stone-200/60 sm:border-none">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">إدارة أوامر الشراء المباشر</h1>
+          <p className="text-xs text-stone-500 mt-0.5">متابعة شحنات وتوريد الأحجار الطبيعية المشتراة مباشرة من الموقع</p>
+        </div>
       </div>
 
-      <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-stone-sm">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-stone-200 shadow-stone-sm">
         {isLoading ? (
           <div className="p-12 text-center text-xs text-stone-400">جاري تحميل أوامر الشراء...</div>
         ) : orders.length === 0 ? (
           <div className="p-12 text-center text-xs text-stone-400">لا توجد أوامر شراء حالياً</div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-right text-xs">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-right text-xs min-w-[650px]">
               <thead className="bg-stone-50 text-stone-500 border-b border-stone-200">
                 <tr>
                   <th className="p-3">رقم الطلب</th>

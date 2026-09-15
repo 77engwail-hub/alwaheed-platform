@@ -21,7 +21,7 @@ import {
   Eye,
   EyeOff,
 } from 'lucide-react';
-import { getAdminToken } from '../../lib/admin-api';
+import { adminFetch } from '../../lib/admin-api';
 
 const ROLES: { value: string; label: string; desc: string; color: string }[] = [
   { value: 'SUPER_ADMIN', label: 'مدير نظام عام (Super Admin)', desc: 'صلاحيات كاملة للتحكم بالنظام والمستخدمين', color: 'bg-rose-500/20 text-rose-400 border-rose-500/30' },
@@ -57,17 +57,8 @@ export default function UsersManagementPage() {
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const token = getAdminToken();
-      const res = await fetch(`${apiUrl}/auth/users`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setUsers(data.data || []);
-      } else {
-        throw new Error(data?.error?.message || 'فشل تحميل قائمة المستخدمين');
-      }
+      const data = await adminFetch('/auth/users');
+      setUsers(data || []);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -85,19 +76,10 @@ export default function UsersManagementPage() {
     setSuccessMsg('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const token = getAdminToken();
-      const res = await fetch(`${apiUrl}/auth/users`, {
+      await adminFetch('/auth/users', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(formData),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message || 'فشل إنشاء المستخدم');
 
       setSuccessMsg(`تم إنشاء المستخدم (${formData.name}) بنجاح.`);
       setShowAddModal(false);
@@ -117,21 +99,11 @@ export default function UsersManagementPage() {
 
   const handleUpdateRole = async (userId: string, newRole: string) => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const token = getAdminToken();
-      const res = await fetch(`${apiUrl}/auth/users/${userId}`, {
+      await adminFetch(`/auth/users/${userId}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ role: newRole }),
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data?.error?.message || 'فشل تحديث الصلاحية');
-      }
       setSuccessMsg('تم تحديث صلاحية المستخدم بنجاح.');
       fetchUsers();
     } catch (err: any) {
@@ -141,21 +113,11 @@ export default function UsersManagementPage() {
 
   const handleToggleStatus = async (userId: string, currentStatus: boolean) => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const token = getAdminToken();
-      const res = await fetch(`${apiUrl}/auth/users/${userId}`, {
+      await adminFetch(`/auth/users/${userId}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ isActive: !currentStatus }),
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data?.error?.message || 'فشل تعديل حالة الحساب');
-      }
       setSuccessMsg('تم تعديل حالة الحساب بنجاح.');
       fetchUsers();
     } catch (err: any) {
@@ -175,19 +137,10 @@ export default function UsersManagementPage() {
     setSuccessMsg('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const token = getAdminToken();
-      const res = await fetch(`${apiUrl}/auth/users/${resetUser.id}/reset-password`, {
+      await adminFetch(`/auth/users/${resetUser.id}/reset-password`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ newPassword: newResetPassword }),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message || 'فشل إعادة تعيين كلمة المرور');
 
       setSuccessMsg(`تم بنجاح تغيير كلمة المرور للمستخدم (${resetUser.name})`);
       setResetUser(null);
@@ -203,17 +156,10 @@ export default function UsersManagementPage() {
     if (!confirm(`هل أنت متأكد من رغبتك في حذف المستخدم "${userName}" نهائياً؟`)) return;
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
-      const token = getAdminToken();
-      const res = await fetch(`${apiUrl}/auth/users/${userId}`, {
+      await adminFetch(`/auth/users/${userId}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data?.error?.message || 'فشل حذف المستخدم');
-      }
       setSuccessMsg('تم حذف المستخدم بنجاح.');
       fetchUsers();
     } catch (err: any) {
@@ -230,6 +176,7 @@ export default function UsersManagementPage() {
       u.role?.toLowerCase().includes(q)
     );
   });
+
 
   return (
     <div className="space-y-8">
@@ -288,9 +235,9 @@ export default function UsersManagementPage() {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-2xl border border-stone-200 shadow-stone-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-stone-200 shadow-stone-sm overflow-hidden p-0 sm:p-2">
         <div className="overflow-x-auto">
-          <table className="w-full text-right text-xs">
+          <table className="w-full text-right text-xs min-w-[700px]">
             <thead className="bg-stone-50 border-b border-stone-200 text-stone-500 font-bold">
               <tr>
                 <th className="py-3.5 px-4">المستخدم</th>

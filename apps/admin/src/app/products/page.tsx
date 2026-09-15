@@ -107,24 +107,26 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold text-stone-900">إدارة المنتجات والأحجار المعمارية</h1>
-          <p className="text-xs text-stone-500">إضافة وتعديل الأحجار الطبيعية، التيجان، النقوش، والتشكيلات المعمارية</p>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">إدارة كتالوج المنتجات والأحجار</h1>
+          <p className="text-xs text-stone-500 mt-0.5">
+            إضافة وتعديل الأحجار الطبيعية، التيجان، الأعمدة، والديكورات المنحوتة
+          </p>
         </div>
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-stone-900 hover:bg-stone-800 text-gold font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-1.5 shadow-sm"
+          className="w-full sm:w-auto bg-stone-900 hover:bg-stone-800 text-gold font-bold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all"
         >
           <Plus className="w-4 h-4" />
-          <span>إضافة منتج جديد</span>
+          <span>إضافة منتج حجري جديد</span>
         </button>
       </div>
 
       {feedback && (
         <div
-          className={`p-4 rounded-xl text-xs flex items-center gap-2 ${
+          className={`p-3.5 sm:p-4 rounded-xl text-xs flex items-center gap-2 ${
             feedback.type === 'success'
               ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
               : 'bg-rose-50 border border-rose-200 text-rose-700'
@@ -140,12 +142,12 @@ export default function AdminProductsPage() {
       )}
 
       {/* Products Table */}
-      <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-stone-sm">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-stone-200 shadow-stone-sm">
         {isLoading ? (
           <div className="p-12 text-center text-xs text-stone-400">جاري تحميل المنتجات...</div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-right text-xs">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-right text-xs min-w-[700px]">
               <thead className="bg-stone-50 text-stone-500 border-b border-stone-200">
                 <tr>
                   <th className="p-3">المنتج</th>
@@ -199,17 +201,17 @@ export default function AdminProductsPage() {
 
       {/* Modal: Add Product */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-stone-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-5 sm:space-y-6 shadow-2xl">
             <div className="flex justify-between items-center pb-3 border-b border-stone-100">
-              <h2 className="text-lg font-bold text-stone-900">إضافة منتج حجري جديد</h2>
+              <h2 className="text-base sm:text-lg font-bold text-stone-900">إضافة منتج حجري جديد</h2>
               <button onClick={() => setIsModalOpen(false)} className="p-1 text-stone-400 hover:text-stone-800">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleCreateProduct} className="space-y-4 text-xs">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-1">
                   <label className="font-bold text-stone-700">الاسم بالعربية *</label>
                   <input

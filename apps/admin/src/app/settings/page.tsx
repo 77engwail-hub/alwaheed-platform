@@ -77,26 +77,26 @@ export default function AdminSettingsPage() {
   return (
     <div className="max-w-4xl space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-stone-200/60 sm:border-none">
         <div>
-          <h1 className="text-2xl font-extrabold text-stone-900">إعدادات المنصة والمظهر العام</h1>
-          <p className="text-xs text-stone-500">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">إعدادات المنصة والمظهر العام</h1>
+          <p className="text-xs text-stone-500 mt-0.5">
             تعديل الهوية، أرقام التواصل، الموقع الجغرافي، الثيمات الافتراضية، وبوابات الدفع
           </p>
         </div>
 
         <Link
           href="/settings/payment-providers"
-          className="bg-gold hover:bg-gold-dark text-stone-950 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-sm transition-all self-start sm:self-auto"
+          className="w-full sm:w-auto bg-gold hover:bg-gold-dark text-stone-950 font-bold text-xs px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all"
         >
           <Wallet className="w-4 h-4" />
-          <span>إدارة بوابات الدفع والمحافظ ↗</span>
+          <span>إدارة حسابات المحافظ ↗</span>
         </Link>
       </div>
 
       {feedback && (
         <div
-          className={`p-4 rounded-xl text-xs flex items-center gap-2 ${
+          className={`p-3.5 sm:p-4 rounded-xl text-xs flex items-center gap-2 ${
             feedback.type === 'success'
               ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
               : 'bg-rose-50 border border-rose-200 text-rose-700'
@@ -111,7 +111,7 @@ export default function AdminSettingsPage() {
         </div>
       )}
 
-      <form onSubmit={handleSave} className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-stone-sm space-y-6 text-xs">
+      <form onSubmit={handleSave} className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-stone-200 shadow-stone-sm space-y-6 text-xs">
         {/* Section 1: Store Identity */}
         <div className="space-y-4">
           <h2 className="text-sm font-bold text-stone-900 border-r-4 border-gold pr-2">

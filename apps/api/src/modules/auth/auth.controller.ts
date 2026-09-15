@@ -16,11 +16,16 @@ authRouter.post('/login', async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err: any) {
-    return res.status(400).json({
+    const isZod = err.name === 'ZodError' || Array.isArray(err.errors);
+    const errorMessage = isZod
+      ? err.errors?.[0]?.message || 'بيانات غير صالحة'
+      : err.message || 'فشل تسجيل الدخول';
+
+    return res.status(isZod ? 400 : 401).json({
       success: false,
       error: {
-        code: 'AUTH_FAILED',
-        message: err.message || 'فشل تسجيل الدخول',
+        code: isZod ? 'VALIDATION_ERROR' : 'AUTH_FAILED',
+        message: errorMessage,
       },
     });
   }

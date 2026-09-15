@@ -132,12 +132,12 @@ export default function AdminQuotationsPage() {
   return (
     <div className="space-y-6">
       {/* Title */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold text-stone-900">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">
             إدارة طلبات عروض الأسعار والتصاميم المخصصة (RFQ)
           </h1>
-          <p className="text-xs text-stone-500">
+          <p className="text-xs text-stone-500 mt-0.5">
             متابعة المخططات الهندسية، احتساب التكاليف وجداول الكميات، واعتماد عروض الأسعار
           </p>
         </div>
@@ -145,7 +145,7 @@ export default function AdminQuotationsPage() {
 
       {feedback && (
         <div
-          className={`p-4 rounded-xl text-xs flex items-center gap-2 ${
+          className={`p-3.5 sm:p-4 rounded-xl text-xs flex items-center gap-2 ${
             feedback.type === 'success'
               ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
               : 'bg-rose-50 border border-rose-200 text-rose-700'
@@ -161,9 +161,9 @@ export default function AdminQuotationsPage() {
       )}
 
       {/* Main Two-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
         {/* Left Column: Quotations List */}
-        <div className="lg:col-span-5 bg-white rounded-3xl p-5 border border-stone-200 shadow-stone-sm space-y-4">
+        <div className="lg:col-span-5 bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-stone-200 shadow-stone-sm space-y-4">
           {/* Filter Bar */}
           <div className="flex gap-2">
             <select
@@ -186,7 +186,7 @@ export default function AdminQuotationsPage() {
           ) : quotations.length === 0 ? (
             <div className="p-8 text-center text-xs text-stone-400">لا توجد طلبات تطابق الفلتر</div>
           ) : (
-            <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
+            <div className="space-y-2 max-h-[500px] sm:max-h-[600px] overflow-y-auto pr-1">
               {quotations.map((q) => {
                 const isSelected = selectedQuotation?.id === q.id;
                 const statusMeta = formatQuotationStatus(q.status);
@@ -199,7 +199,7 @@ export default function AdminQuotationsPage() {
                       setAdminNotes(q.adminNotes || '');
                       setFeedback(null);
                     }}
-                    className={`p-4 rounded-2xl border cursor-pointer transition-all space-y-2 ${
+                    className={`p-3.5 sm:p-4 rounded-2xl border cursor-pointer transition-all space-y-2 ${
                       isSelected
                         ? 'border-gold bg-stone-900 text-stone-100 shadow-sm'
                         : 'border-stone-100 bg-stone-50/60 hover:bg-stone-100/80 text-stone-800'
@@ -234,14 +234,14 @@ export default function AdminQuotationsPage() {
         </div>
 
         {/* Right Column: Selected Quotation Details & Management */}
-        <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-stone-sm space-y-6">
+        <div className="lg:col-span-7 bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-stone-200 shadow-stone-sm space-y-6">
           {selectedQuotation ? (
             <div className="space-y-6">
               {/* Header */}
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-4 border-b border-stone-100">
                 <div>
                   <span className="text-[11px] text-stone-400 font-mono">تفاصيل المعاملة</span>
-                  <h2 className="text-xl font-bold text-stone-900 font-mono">
+                  <h2 className="text-lg sm:text-xl font-bold text-stone-900 font-mono">
                     {selectedQuotation.referenceNumber}
                   </h2>
                 </div>
@@ -252,7 +252,7 @@ export default function AdminQuotationsPage() {
               </div>
 
               {/* Customer Info Card */}
-              <div className="grid grid-cols-2 gap-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs">
                 <div className="p-3 bg-stone-50 rounded-xl space-y-1">
                   <span className="text-stone-400 block">اسم العميل</span>
                   <span className="font-bold text-stone-800">{selectedQuotation.customerName}</span>

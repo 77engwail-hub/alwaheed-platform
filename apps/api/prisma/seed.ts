@@ -15,7 +15,9 @@ async function main() {
     update: {
       passwordHash: hashedPassword,
       name: 'المهندس مدير النظام - الوحيد',
+      phone: '+967777360681',
       role: 'SUPER_ADMIN',
+      isActive: true,
     },
     create: {
       email: 'admin@alwaheed-stone.com',
