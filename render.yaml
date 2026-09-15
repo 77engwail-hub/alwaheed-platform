@@ -1,4 +1,4 @@
-# Render Blueprint for 100% Free Deployment
+# Render Blueprint for Al-Waheed Platform
 # Docs: https://render.com/docs/blueprint-spec
 
 services:
@@ -8,8 +8,12 @@ services:
     env: node
     plan: free
     region: frankfurt
-    buildCommand: pnpm install && pnpm --filter @al-waheed/types build && pnpm --filter @al-waheed/validation build && pnpm --filter @al-waheed/api build && pnpm --filter @al-waheed/api db:push
+    buildCommand: pnpm install && pnpm --filter @al-waheed/types build && pnpm --filter @al-waheed/validation build && pnpm --filter @al-waheed/api build && pnpm --filter @al-waheed/api db:push && pnpm --filter @al-waheed/api db:seed
     startCommand: pnpm --filter @al-waheed/api start
+    disk:
+      name: alwaheed-data
+      mountPath: /data
+      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
@@ -18,14 +22,6 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: DATABASE_URL
-        fromDatabase:
-          name: alwaheed-db
-          property: connectionString
-
-databases:
-  # 2. Free PostgreSQL Database
-  - name: alwaheed-db
-    plan: free
-    region: frankfurt
-    databaseName: alwaheed
-    user: alwaheed_user
+        value: file:/data/prod.db
+      - key: INITIAL_ADMIN_PASSWORD
+        value: Admin@AlWaheed2026!
