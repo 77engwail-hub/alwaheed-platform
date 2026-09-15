@@ -57,28 +57,28 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header Banner */}
-      <div className="bg-stone-900 text-stone-100 rounded-3xl p-8 sm:p-10 border border-stone-800 shadow-stone-md">
-        <div className="max-w-3xl space-y-3">
-          <span className="text-xs font-bold text-gold tracking-widest uppercase flex items-center gap-1.5">
+      <div className="bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-8 border border-stone-800 shadow-stone-md">
+        <div className="max-w-3xl space-y-2.5">
+          <span className="text-[11px] sm:text-xs font-bold text-gold tracking-widest uppercase flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
             <span>كتالوج الأحجار والزخارف المعمارية</span>
           </span>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white">
             أحجار البناء الطبيعية، الواجهات، والنقوش الملكية
           </h1>
-          <p className="text-sm text-stone-300 leading-relaxed">
+          <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
             استعرض تشكيلة متكاملة من كتل وألواح الحجر الصنعاني والمأربي، التيجان الكورنثية، الأقواس، المشربيات، والمدافئ الحجرية المنفذة بدقة هندسية عالية.
           </p>
         </div>
       </div>
 
       {/* Search & Filters Bar */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Sidebar Filters */}
-        <aside className="lg:col-span-1 space-y-6 bg-white p-6 rounded-2xl border border-stone-200/80 shadow-stone-sm h-fit">
-          <div className="flex items-center justify-between pb-3 border-b border-stone-100">
-            <span className="text-sm font-bold text-stone-900 flex items-center gap-2">
-              <Filter className="w-4 h-4 text-gold-dark" />
+        <aside className="lg:col-span-1 space-y-5 bg-white p-5 rounded-2xl border border-stone-200/80 shadow-stone-sm h-fit">
+          <div className="flex items-center justify-between pb-2.5 border-b border-stone-100">
+            <span className="text-xs sm:text-sm font-bold text-stone-900 flex items-center gap-1.5">
+              <Filter className="w-3.5 h-3.5 text-gold-dark" />
               <span>تصفية النتائج</span>
             </span>
             {(categorySlug || materialSlug || finishSlug || pricingMode || search) && (

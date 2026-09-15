@@ -51,23 +51,23 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       {/* Header */}
-      <div className="bg-stone-900 text-stone-100 rounded-3xl p-8 sm:p-12 border border-stone-800 shadow-stone-md text-center max-w-4xl mx-auto space-y-4">
-        <span className="text-xs font-bold text-gold tracking-widest uppercase inline-flex items-center gap-1.5">
+      <div className="bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-10 border border-stone-800 shadow-stone-md text-center max-w-4xl mx-auto space-y-3">
+        <span className="text-[11px] sm:text-xs font-bold text-gold tracking-widest uppercase inline-flex items-center gap-1.5">
           <Sparkles className="w-3.5 h-3.5" />
           <span>خدمات متخصصة في الحجر المعماري</span>
         </span>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white">
           خدمات المقاولات الحجرية والنحت والتشكيل المعماري
         </h1>
-        <p className="text-sm text-stone-300 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-stone-300 max-w-2xl mx-auto leading-relaxed">
           نقدم حلولاً معمارية متكاملة تبدأ من دراسة المخطط الهندسي وحتى التسليم النهائي في موقع البناء بأعلى مواصفات الجودة والإتقان.
         </p>
       </div>
 
       {/* Services Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((srv, idx) => (
           <div
             key={idx}

@@ -1,16 +1,12 @@
 import type { Metadata } from 'next';
-import { Tajawal } from 'next/font/google';
 import './globals.css';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { WhatsAppFloatingButton } from '../components/WhatsAppFloatingButton';
-
-const tajawal = Tajawal({
-  subsets: ['arabic'],
-  weight: ['300', '400', '500', '700', '800', '900'],
-  variable: '--font-tajawal',
-  display: 'swap',
-});
+import { SatelliteLocationFloatingButton } from '../components/SatelliteLocationFloatingButton';
+import { ThemeProvider } from '../context/ThemeContext';
+import { I18nProvider } from '../context/I18nContext';
+import { StoneConsultantChatbot } from '../components/StoneConsultantChatbot';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://alwaheed-platform.vercel.app';
 
@@ -104,6 +100,7 @@ export default function RootLayout({
         description:
           'مؤسسة متخصصة في توريد ونحت وزخرفة أحجار البناء، الحجر الطبيعي اليمني، الرخام، والواجهات الحجرية للفلل والقصور في صنعاء واليمن.',
         url: siteUrl,
+        hasMap: 'https://maps.app.goo.gl/Z3fP7feMjhyEeH7J9',
         telephone: '+967777360681',
         priceRange: '$$',
         image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
@@ -116,8 +113,8 @@ export default function RootLayout({
         },
         geo: {
           '@type': 'GeoCoordinates',
-          latitude: '15.3218',
-          longitude: '44.1852',
+          latitude: '15.3189667',
+          longitude: '44.1804919',
         },
         openingHoursSpecification: [
           {
@@ -150,6 +147,7 @@ export default function RootLayout({
           ],
         },
         sameAs: [
+          'https://maps.app.goo.gl/Z3fP7feMjhyEeH7J9',
           'https://www.facebook.com/people/%D8%A7%D9%84%D9%88%D8%AD%D9%8A%D8%AF-%D9%84%D9%84%D8%B2%D8%AE%D8%B1%D9%81%D9%87-%D8%A7%D9%84%D9%85%D8%B9%D9%85%D8%A7%D8%B1%D9%8A%D9%87-%D9%88%D9%86%D8%AD%D8%AA-%D9%88%D8%A7%D9%84%D9%85%D9%82%D8%A7%D9%88%D9%84%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D9%87-%D8%AD%D8%AF%D9%87-%D9%81%D8%AC-%D8%B9%D8%B7%D8%A7%D9%86-770663641/100067643884572/',
         ],
       },
@@ -171,20 +169,33 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ar" dir="rtl" className={tajawal.variable}>
+    <html lang="ar" dir="rtl" data-theme="dark">
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&family=Almarai:wght@300;400;700;800&family=Cairo:wght@300;400;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-stone-100 text-stone-900 selection:bg-gold selection:text-stone-950 font-arabic">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppFloatingButton />
+      <body className="min-h-screen flex flex-col selection:bg-gold selection:text-stone-950 font-arabic">
+        <I18nProvider>
+          <ThemeProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <WhatsAppFloatingButton />
+            <SatelliteLocationFloatingButton />
+            <StoneConsultantChatbot />
+          </ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   );
 }
+

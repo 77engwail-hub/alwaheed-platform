@@ -60,15 +60,15 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="space-y-1">
-            <label className="text-xs font-bold text-stone-300">البريد الإلكتروني</label>
+            <label className="text-xs font-bold text-stone-300">البريد الإلكتروني / رقم الهاتف / اسم المستخدم</label>
             <div className="relative">
               <input
-                type="email"
+                type="text"
                 required
-                placeholder="name@example.com"
+                placeholder="admin@al-waheed.ye أو 777360681 أو اسم المستخدم"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-stone-950 border border-stone-800 text-stone-100 px-4 py-3 pr-10 rounded-xl text-sm focus:border-gold focus:ring-1 focus:ring-gold outline-none font-mono placeholder:text-stone-600"
+                className="w-full bg-stone-950 border border-stone-800 text-stone-100 px-4 py-3 pr-10 rounded-xl text-sm focus:border-gold focus:ring-1 focus:ring-gold outline-none placeholder:text-stone-600"
               />
               <Mail className="w-4 h-4 text-stone-500 absolute top-3.5 right-3.5" />
             </div>

@@ -355,7 +355,7 @@ model Order {
   city            String
   status          String               @default("PENDING") // PENDING, CONFIRMED, PROCESSING, READY_FOR_DISPATCH, SHIPPED, DELIVERED, CANCELLED
   paymentStatus   String               @default("UNPAID") // UNPAID, PARTIALLY_PAID, PAID, REFUNDED
-  paymentMethod   String               @default("CASH_ON_DELIVERY") // CASH_ON_DELIVERY, BANK_TRANSFER, CREDIT_CARD, CUSTOM_AGREEMENT
+  paymentMethod   String               @default("CASH_ON_DELIVERY") // CASH_ON_DELIVERY, BANK_TRANSFER, CREDIT_CARD, CUSTOM_AGREEMENT, YEMENI_WALLET
   subtotal        Float                @default(0)
   deliveryFee     Float                @default(0)
   discount        Float                @default(0)
@@ -366,6 +366,8 @@ model Order {
   updatedAt       DateTime             @updatedAt
   items           OrderItem[]
   statusHistory   OrderStatusHistory[]
+  transactions    PaymentTransaction[]
+  allocations     PaymentAllocation[]
 
   @@map("orders")
 }
@@ -467,3 +469,193 @@ model AuditLog {
 
   @@map("audit_logs")
 }
+
+// ==============================================================================
+// 7. Yemeni Electronic Wallets & AI Payment Verification Engine
+// ==============================================================================
+
+model PaymentProvider {
+  id                      String                     @id @default(cuid())
+  code                    String                     @unique // ONE_CASH, JAWALI, FLOOSAK, CASH, SABA_CASH, CAC_MOBILY, MPAY, KURAIMI_BANK, MANUAL_WALLET
+  nameAr                  String
+  nameEn                  String
+  entityIssuer            String?                    // الجهة المالكة / البنك / الشركة المصدرة (مثال: "مجموعة هائل سعيد أنعم", "شركة الأكوع موني", "بنك الكريمي للتمويل الأصغر الإسلامي", "بنك التسليف التعاوني والزراعي كاك بنك", "شركة وي كاش")
+  logoUrl                 String?
+  isActive                Boolean                    @default(true)
+  displayOrder            Int                        @default(0)
+  supportedMethods        String                     @default("MANUAL_RECEIPT,MERCHANT_PAYMENT,WALLET_TRANSFER,QR_PAYMENT") // comma separated
+  defaultCurrency         String                     @default("YER")
+  minAmount               Float?
+  maxAmount               Float?
+  instructionsAr          String?
+  instructionsEn          String?
+  isAiVerificationEnabled Boolean                    @default(true)
+  isApiVerificationEnabled Boolean                   @default(false)
+  isWebhookEnabled        Boolean                    @default(false)
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
+  accounts                MerchantWalletAccount[]
+  credentials             PaymentProviderCredential?
+  transactions            PaymentTransaction[]
+
+  @@map("payment_providers")
+}
+
+model MerchantWalletAccount {
+  id                    String               @id @default(cuid())
+  providerId            String
+  provider              PaymentProvider      @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  accountName           String               // e.g. "حساب المبيعات الرئيسي - المركز"
+  accountNumber         String?              // رقم الحساب المصرفي
+  walletNumber          String?              // رقم هاتف المشترك
+  merchantId            String?              // رقم التاجر / نقطة البيع
+  merchantPaymentNumber String?              // كود خدمة دفع المشتريات
+  qrCodeUrl             String?              // صورة رمز الاستجابة السريعة QR
+  accountHolderName     String               // اسم المستفيد الرسمي (مؤسسة الوحيد للزخرفة)
+  currency              String               @default("YER")
+  isActive              Boolean              @default(true)
+  isDefault             Boolean              @default(false)
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  transactions          PaymentTransaction[]
+
+  @@map("merchant_wallet_accounts")
+}
+
+model PaymentProviderCredential {
+  id                     String          @id @default(cuid())
+  providerId             String          @unique
+  provider               PaymentProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  apiUrl                 String?
+  encryptedApiKey        String?
+  encryptedApiSecret     String?
+  encryptedWebhookSecret String?
+  environment            String          @default("SANDBOX") // SANDBOX, PRODUCTION
+  updatedAt              DateTime        @updatedAt
+
+  @@map("payment_provider_credentials")
+}
+
+model PaymentTransaction {
+  id                     String                @id @default(cuid())
+  transactionNumber      String                @unique // e.g. TXN-2026-0001
+  orderId                String?
+  order                  Order?                @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  providerId             String
+  provider               PaymentProvider       @relation(fields: [providerId], references: [id])
+  accountId              String?
+  account                MerchantWalletAccount? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  paymentMethodType      String                @default("MANUAL_RECEIPT") // MANUAL_RECEIPT, MERCHANT_PAYMENT, WALLET_TRANSFER, QR_PAYMENT, API, WEBHOOK
+  expectedAmount         Float
+  detectedAmount         Float?
+  confirmedAmount        Float?
+  currency               String                @default("YER")
+  referenceNumber        String?               // رقم الإشعار / العملية المستخرج
+  senderName             String?               // اسم المحول
+  senderWalletNumber     String?               // رقم محفظة المحول
+  receiverName           String?               // اسم المستلم
+  receiverWalletNumber   String?               // رقم محفظة المستلم
+  merchantIdUsed         String?               // رقم التاجر المستخدم
+  status                 String                @default("PENDING_PAYMENT") // PENDING_PAYMENT, RECEIPT_UPLOADED, ANALYZING, AI_VERIFIED, REVIEW_REQUIRED, PARTIALLY_PAID, PAYMENT_CONFIRMED, PAYMENT_REJECTED, DUPLICATE_SUSPECTED, REFUND_REQUIRED
+  aiScore                Float?                // 0 to 100
+  aiRecommendation       String?               // ACCEPT, PARTIAL_PAYMENT, OVERPAYMENT, MANUAL_REVIEW, REJECT, SUSPICIOUS
+  rejectionReason        String?
+  confirmedById          String?
+  confirmedByName        String?
+  confirmedAt            DateTime?
+  manualAdjustmentReason String?
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+  receipts               PaymentReceipt[]
+  verification           PaymentVerification?
+  allocations            PaymentAllocation[]
+  auditLogs              PaymentAuditLog[]
+
+  @@map("payment_transactions")
+}
+
+model PaymentReceipt {
+  id                             String             @id @default(cuid())
+  transactionId                  String
+  transaction                    PaymentTransaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  fileUrl                        String
+  fileName                       String
+  fileSize                       Int
+  mimeType                       String
+  fileHashSha256                 String
+  perceptualHash                 String?
+  imageWidth                     Int?
+  imageHeight                    Int?
+  isDuplicateDetected            Boolean            @default(false)
+  duplicateOriginalTransactionId String?
+  createdAt                      DateTime           @default(now())
+
+  @@index([fileHashSha256])
+  @@index([perceptualHash])
+  @@map("payment_receipts")
+}
+
+model PaymentVerification {
+  id                       String             @id @default(cuid())
+  transactionId            String             @unique
+  transaction              PaymentTransaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  ocrRawText               String?
+  extractedDataJson        String?            // ExtractedReceiptData JSON
+  amountMatchScore         Float              @default(0)
+  receiverMatchScore       Float              @default(0)
+  referenceValidationScore Float              @default(0)
+  dateTimeMatchScore       Float              @default(0)
+  walletDetectionScore     Float              @default(0)
+  ocrConfidenceScore       Float              @default(0)
+  totalScore               Float              @default(0)
+  integrityFlagsJson       String?            // string[] JSON
+  recommendation           String             @default("MANUAL_REVIEW") // ACCEPT, PARTIAL_PAYMENT, OVERPAYMENT, MANUAL_REVIEW, REJECT, SUSPICIOUS
+  createdAt                DateTime           @default(now())
+
+  @@map("payment_verifications")
+}
+
+model PaymentAllocation {
+  id              String             @id @default(cuid())
+  transactionId   String
+  transaction     PaymentTransaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  orderId         String
+  order           Order              @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  allocatedAmount Float
+  currency        String             @default("YER")
+  createdAt       DateTime           @default(now())
+
+  @@map("payment_allocations")
+}
+
+model PaymentAuditLog {
+  id            String             @id @default(cuid())
+  transactionId String
+  transaction   PaymentTransaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  userId        String?
+  userEmail     String?
+  action        String             // RECEIPT_UPLOADED, AI_ANALYZED, AMOUNT_CONFIRMED, PAYMENT_ACCEPTED, PAYMENT_REJECTED, RECEIPT_RE_REQUESTED, SUSPICIOUS_FLAGGED, ALLOCATION_UPDATED
+  oldValuesJson String?            // JSON
+  newValuesJson String?            // JSON
+  reason        String?
+  ipAddress     String?
+  createdAt     DateTime           @default(now())
+
+  @@map("payment_audit_logs")
+}
+
+model WebhookEvent {
+  id           String    @id @default(cuid())
+  providerId   String
+  eventId      String    @unique
+  eventType    String
+  payloadJson  String
+  signature    String?
+  status       String    @default("RECEIVED") // RECEIVED, PROCESSED, FAILED, DUPLICATE_IGNORED
+  processedAt  DateTime?
+  errorMessage String?
+  createdAt    DateTime  @default(now())
+
+  @@map("webhook_events")
+}
+

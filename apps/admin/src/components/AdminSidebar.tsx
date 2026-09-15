@@ -9,12 +9,15 @@ import {
   Boxes,
   Building,
   ShoppingBag,
+  CreditCard,
   Image as ImageIcon,
   Settings,
   ShieldCheck,
   LogOut,
-  Sparkles,
+  User,
   Users,
+  Rss,
+  Sparkles,
 } from 'lucide-react';
 import { removeAdminToken } from '../lib/admin-api';
 
@@ -23,12 +26,15 @@ export const AdminSidebar: React.FC = () => {
 
   const links = [
     { href: '/', label: 'لوحة المؤشرات العامة', icon: <LayoutDashboard className="w-4 h-4" /> },
+    { href: '/posts', label: 'المنشورات والعروض والمقالات', icon: <Rss className="w-4 h-4" /> },
+    { href: '/payments', label: 'مركز التحقق والمدفوعات الذكية', icon: <CreditCard className="w-4 h-4" /> },
     { href: '/quotations', label: 'طلبات عروض الأسعار (RFQ)', icon: <FileText className="w-4 h-4" /> },
     { href: '/products', label: 'إدارة المنتجات والأحجار', icon: <Boxes className="w-4 h-4" /> },
     { href: '/projects', label: 'إدارة سابقة الأعمال والمشاريع', icon: <Building className="w-4 h-4" /> },
     { href: '/orders', label: 'أوامر الشراء المباشر', icon: <ShoppingBag className="w-4 h-4" /> },
     { href: '/users', label: 'إدارة المستخدمين والصلاحيات', icon: <Users className="w-4 h-4" /> },
     { href: '/media', label: 'مكتبة الوسائط والصور', icon: <ImageIcon className="w-4 h-4" /> },
+    { href: '/profile', label: 'الملف الشخصي والحماية', icon: <User className="w-4 h-4" /> },
     { href: '/settings', label: 'إعدادات المنصة والتواصل', icon: <Settings className="w-4 h-4" /> },
     { href: '/audit', label: 'سجلات التدقيق والأمان', icon: <ShieldCheck className="w-4 h-4" /> },
   ];

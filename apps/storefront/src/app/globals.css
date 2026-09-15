@@ -3,24 +3,155 @@
 @tailwind utilities;
 
 @layer base {
+  :root,
+  html[data-theme="dark"] {
+    --background: #0c0a09;
+    --foreground: #f5f5f4;
+    --card: #1c1917;
+    --card-foreground: #fafaf9;
+    --primary: #d4af37;
+    --primary-foreground: #0c0a09;
+    --accent: #d4af37;
+    --accent-foreground: #0c0a09;
+    --border: #292524;
+    --surface-glass: rgba(28, 25, 23, 0.85);
+    --gold-glow: 0 0 25px rgba(212, 175, 55, 0.25);
+  }
+
+  html[data-theme="light"] {
+    --background: #faf8f5;
+    --foreground: #1c1917;
+    --card: #ffffff;
+    --card-foreground: #1c1917;
+    --primary: #b8860b;
+    --primary-foreground: #ffffff;
+    --accent: #d4af37;
+    --accent-foreground: #1c1917;
+    --border: #e7e5e4;
+    --surface-glass: rgba(255, 255, 255, 0.85);
+    --gold-glow: 0 0 20px rgba(184, 134, 11, 0.15);
+  }
+
+  html[data-theme="heritage"] {
+    --background: #1a1412;
+    --foreground: #f7eedd;
+    --card: #281d19;
+    --card-foreground: #f7eedd;
+    --primary: #e09848;
+    --primary-foreground: #1a1412;
+    --accent: #e09848;
+    --accent-foreground: #1a1412;
+    --border: #3d2c25;
+    --surface-glass: rgba(40, 29, 25, 0.88);
+    --gold-glow: 0 0 25px rgba(224, 152, 72, 0.25);
+  }
+
+  html[data-theme="emerald"] {
+    --background: #061a14;
+    --foreground: #ecfdf5;
+    --card: #0c2b22;
+    --card-foreground: #f0fdf4;
+    --primary: #10b981;
+    --primary-foreground: #061a14;
+    --accent: #d4af37;
+    --accent-foreground: #061a14;
+    --border: #144637;
+    --surface-glass: rgba(12, 43, 34, 0.88);
+    --gold-glow: 0 0 25px rgba(16, 185, 129, 0.25);
+  }
+
+  html[data-theme="sapphire"] {
+    --background: #091224;
+    --foreground: #eff6ff;
+    --card: #111e3b;
+    --card-foreground: #f8fafc;
+    --primary: #38bdf8;
+    --primary-foreground: #091224;
+    --accent: #d4af37;
+    --accent-foreground: #091224;
+    --border: #1e3a6d;
+    --surface-glass: rgba(17, 30, 59, 0.88);
+    --gold-glow: 0 0 25px rgba(56, 189, 248, 0.25);
+  }
+
+  html[data-theme="sandstone"] {
+    --background: #fdf6ec;
+    --foreground: #291e14;
+    --card: #ffffff;
+    --card-foreground: #291e14;
+    --primary: #c27829;
+    --primary-foreground: #ffffff;
+    --accent: #d4af37;
+    --accent-foreground: #291e14;
+    --border: #edd6bf;
+    --surface-glass: rgba(255, 255, 255, 0.9);
+    --gold-glow: 0 0 20px rgba(194, 120, 41, 0.18);
+  }
+
+  /* Font Size Scales - Refined for Balanced Desktop & Mobile Proportions */
+  html[data-font-size="small"] {
+    font-size: 13px;
+  }
+  html[data-font-size="medium"],
   :root {
-    --background: #F7F5F0;
-    --foreground: #1C1917;
-    --card: #FFFFFF;
-    --card-foreground: #1C1917;
-    --primary: #1C1917;
-    --primary-foreground: #F7F5F0;
-    --accent: #C5A880;
-    --accent-foreground: #1C1917;
-    --border: #EAE5D9;
+    font-size: 14.5px;
+  }
+  html[data-font-size="large"] {
+    font-size: 16px;
+  }
+  html[data-font-size="xlarge"] {
+    font-size: 18px;
+  }
+
+  /* Font Family Switching */
+  html[data-font-family="tajawal"] body {
+    font-family: 'Tajawal', sans-serif;
+  }
+  html[data-font-family="alexandria"] body {
+    font-family: 'Alexandria', 'Tajawal', sans-serif;
+  }
+  html[data-font-family="almarai"] body {
+    font-family: 'Almarai', 'Tajawal', sans-serif;
+  }
+  html[data-font-family="cairo"] body {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+  }
+
+  /* High Contrast Accessibility Mode */
+  html[data-high-contrast="true"] {
+    --foreground: #ffffff !important;
+    --border: #d4af37 !important;
+  }
+  html[data-high-contrast="true"] p,
+  html[data-high-contrast="true"] span {
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+
+  /* Reduced Motion Accessibility Mode */
+  html[data-reduced-motion="true"] *,
+  html[data-reduced-motion="true"] *::before,
+  html[data-reduced-motion="true"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  /* Natural Stone Pattern Texture */
+  html[data-stone-pattern="true"] body {
+    background-image: radial-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: var(--font-tajawal), 'Tajawal', 'Cairo', sans-serif;
+    font-family: 'Tajawal', 'Cairo', sans-serif;
     direction: rtl;
     text-align: right;
+    transition: background-color 0.3s ease, color 0.3s ease, font-size 0.2s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 }
 
@@ -31,24 +162,24 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F7F5F0;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C5A880;
+  background: var(--primary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9A7D55;
+  background: #a37c15;
 }
 
 /* Glassmorphic stone card */
 .stone-glass {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--surface-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(234, 229, 217, 0.8);
+  border: 1px solid var(--border);
 }
 
 .dark-stone-glass {
@@ -62,4 +193,13 @@
 .pattern-geometric {
   background-image: radial-gradient(#C5A880 0.75px, transparent 0.75px);
   background-size: 24px 24px;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
 }

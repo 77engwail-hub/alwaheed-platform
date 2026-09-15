@@ -13,34 +13,34 @@ import {
 
 export default function AboutPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       {/* Header */}
-      <div className="bg-stone-900 text-stone-100 rounded-3xl p-8 sm:p-12 border border-stone-800 shadow-stone-md text-center max-w-4xl mx-auto space-y-4">
-        <span className="text-xs font-bold text-gold tracking-widest uppercase inline-flex items-center gap-1.5">
+      <div className="bg-stone-900 text-stone-100 rounded-3xl p-6 sm:p-10 border border-stone-800 shadow-stone-md text-center max-w-4xl mx-auto space-y-3">
+        <span className="text-[11px] sm:text-xs font-bold text-gold tracking-widest uppercase inline-flex items-center gap-1.5">
           <Sparkles className="w-3.5 h-3.5" />
           <span>عن المؤسسة ورؤيتنا المعمارية</span>
         </span>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white">
           مؤسسة الوحيد للزخرفة المعمارية ونحت والمقاولات العامة
         </h1>
-        <p className="text-sm text-stone-300 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-stone-300 max-w-2xl mx-auto leading-relaxed">
           انطلاقاً من موقعنا في صنعاء (حده - فج عطان)، نعمل على تجسيد أسمى آيات الفن المعماري الحجري، محافظين على التراث اليمني الأصيل ومطوعين أحدث تقنيات التشكيل الهندسي.
         </p>
       </div>
 
       {/* Main Philosophy Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        <div className="space-y-6">
-          <div className="space-y-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div className="space-y-4 sm:space-y-5">
+          <div className="space-y-1.5">
             <span className="text-xs font-bold text-gold uppercase tracking-wider block">
               رسالتنا وهويتنا
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 leading-snug">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-stone-900 leading-snug">
               الحجر الطبيعي ليس مجرد مادة بناء، بل هو هوية وأصالة معمارية
             </h2>
           </div>
 
-          <p className="text-sm text-stone-600 leading-relaxed">
+          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
             تأسست مؤسسة الوحيد للزخرفة المعمارية ونحت لتلبي تطلعات أصحاب الذوق الرفيع والمشاريع السكنية والتجارية الكبرى الراغبة في التميز المعماري. نمتلك ورشاً متخصصة مجهزة بآلات القص الدقيقة وفريقاً من أمهر النحاتين القادرين على تشكيل التيجان والأقواس والواجهات الحجرية المعقدة.
           </p>
 

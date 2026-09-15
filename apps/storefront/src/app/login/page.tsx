@@ -50,7 +50,7 @@ export default function CustomerLoginPage() {
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">تسجيل دخول العملاء</h1>
           <p className="text-xs text-stone-500">
-            أدخل بريدك الإلكتروني وكلمة المرور للوصول إلى حسابك وعروض أسعارك.
+            أدخل بريدك الإلكتروني، رقم هاتفك، أو اسم المستخدم مع كلمة المرور للدخول.
           </p>
         </div>
 
@@ -63,15 +63,15 @@ export default function CustomerLoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-4 text-xs">
           <div className="space-y-1">
-            <label className="font-bold text-stone-700">البريد الإلكتروني</label>
+            <label className="font-bold text-stone-700">البريد الإلكتروني / رقم الهاتف / اسم المستخدم</label>
             <div className="relative">
               <input
-                type="email"
+                type="text"
                 required
-                placeholder="name@example.com"
+                placeholder="name@example.com أو 777123456 أو اسم المستخدم"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none font-mono text-stone-900"
+                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900 text-xs"
               />
               <Mail className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
             </div>

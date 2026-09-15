@@ -8,17 +8,26 @@ import { AuditService } from '../audit/audit.service.js';
 
 export class AuthService {
   static async login(input: LoginInput, ipAddress?: string) {
-    const user = await prisma.user.findUnique({
-      where: { email: input.email },
+    const identifier = input.email.trim();
+
+    // Look up by email, phone number, or name / username
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: identifier },
+          { phone: identifier },
+          { name: identifier },
+        ],
+      },
     });
 
     if (!user || !user.isActive) {
-      throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة أو الحساب معطل');
+      throw new Error('بيانات الدخول (البريد، الهاتف، أو اسم المستخدم) أو كلمة المرور غير صحيحة أو الحساب معطل');
     }
 
     const isValid = await bcrypt.compare(input.password, user.passwordHash);
     if (!isValid) {
-      throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+      throw new Error('بيانات الدخول أو كلمة المرور غير صحيحة');
     }
 
     // Update last login
@@ -131,6 +140,141 @@ export class AuthService {
     });
     if (!user) throw new Error('المستخدم غير موجود');
     return user;
+  }
+
+  static async updateProfile(
+    userId: string,
+    data: { name?: string; phone?: string; email?: string },
+    ipAddress?: string
+  ) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new Error('المستخدم غير موجود');
+
+    const updateData: any = {};
+    if (data.name && data.name.trim()) updateData.name = data.name.trim();
+    if (data.phone !== undefined) updateData.phone = data.phone?.trim() || null;
+    if (data.email && data.email.trim() && data.email.trim() !== user.email) {
+      const emailExists = await prisma.user.findUnique({ where: { email: data.email.trim() } });
+      if (emailExists) throw new Error('البريد الإلكتروني مستخدم بالفعل بحساب آخر');
+      updateData.email = data.email.trim();
+    }
+
+    const updated = await prisma.user.update({
+      where: { id: userId },
+      data: updateData,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        phone: true,
+        role: true,
+        isActive: true,
+        createdAt: true,
+        lastLoginAt: true,
+      },
+    });
+
+    await AuditService.log({
+      userId,
+      userEmail: updated.email,
+      action: 'UPDATE_PROFILE',
+      entityType: 'User',
+      entityId: userId,
+      details: data,
+      ipAddress,
+    });
+
+    return updated;
+  }
+
+  static async changePassword(
+    userId: string,
+    input: { currentPassword?: string; newPassword: string },
+    isAdminBypass: boolean = false,
+    ipAddress?: string
+  ) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new Error('المستخدم غير موجود');
+
+    if (!isAdminBypass) {
+      if (!input.currentPassword) throw new Error('يرجى إدخال كلمة المرور الحالية');
+      const isValid = await bcrypt.compare(input.currentPassword, user.passwordHash);
+      if (!isValid) throw new Error('كلمة المرور الحالية غير صحيحة');
+    }
+
+    if (!input.newPassword || input.newPassword.length < 6) {
+      throw new Error('كلمة المرور الجديدة يجب ألا تقل عن 6 أحرف أو أرقام');
+    }
+
+    const passwordHash = await bcrypt.hash(input.newPassword, 10);
+    await prisma.user.update({
+      where: { id: userId },
+      data: { passwordHash },
+    });
+
+    await AuditService.log({
+      userId,
+      userEmail: user.email,
+      action: 'CHANGE_PASSWORD',
+      entityType: 'User',
+      entityId: userId,
+      details: { changedByAdmin: isAdminBypass },
+      ipAddress,
+    });
+
+    return { success: true, message: 'تم تغيير كلمة المرور بنجاح' };
+  }
+
+  static async getSecurityOverview(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        phone: true,
+        role: true,
+        isActive: true,
+        createdAt: true,
+        lastLoginAt: true,
+      },
+    });
+    if (!user) throw new Error('المستخدم غير موجود');
+
+    const logs = await prisma.auditLog.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+      take: 10,
+    });
+
+    return {
+      user,
+      lastLoginAt: user.lastLoginAt,
+      securityLogs: logs,
+      securityStatus: {
+        hasPhone: !!user.phone,
+        twoFactorReady: true,
+        lastPasswordChange: logs.find((l) => l.action === 'CHANGE_PASSWORD')?.createdAt || user.createdAt,
+      },
+    };
+  }
+
+  static async deactivateAccount(userId: string, ipAddress?: string) {
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { isActive: false },
+    });
+
+    await AuditService.log({
+      userId,
+      userEmail: user.email,
+      action: 'DEACTIVATE_ACCOUNT',
+      entityType: 'User',
+      entityId: userId,
+      ipAddress,
+    });
+
+    return { success: true, message: 'تم تعطيل الحساب بنجاح' };
   }
 
   // --- Admin User Management ---

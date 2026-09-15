@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { User, Bell, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { User, Bell, ExternalLink, ShieldCheck } from 'lucide-react';
 
 export const AdminHeader: React.FC = () => {
   const [userName, setUserName] = useState('مدير النظام');
@@ -31,15 +32,20 @@ export const AdminHeader: React.FC = () => {
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 text-xs">
-          <div className="w-8 h-8 rounded-full bg-stone-900 text-gold flex items-center justify-center font-bold">
+        <Link
+          href="/profile"
+          className="flex items-center gap-2.5 text-xs p-1.5 pr-3 rounded-2xl hover:bg-stone-100 border border-transparent hover:border-stone-200 transition-all group"
+        >
+          <div className="text-right">
+            <span className="font-extrabold text-stone-900 group-hover:text-gold-dark transition-colors block">
+              {userName}
+            </span>
+            <span className="text-[10px] text-stone-500 font-mono">الملف الشخصي والأمان ↗</span>
+          </div>
+          <div className="w-9 h-9 rounded-xl bg-stone-900 text-gold flex items-center justify-center font-bold shadow-inner group-hover:scale-105 transition-transform">
             <User className="w-4 h-4" />
           </div>
-          <div className="text-right">
-            <span className="font-bold text-stone-900 block">{userName}</span>
-            <span className="text-[10px] text-stone-500 font-mono">SUPER_ADMIN</span>
-          </div>
-        </div>
+        </Link>
       </div>
     </header>
   );

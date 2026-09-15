@@ -14,6 +14,8 @@ import { projectsRouter } from './modules/projects/projects.controller.js';
 import { ordersRouter } from './modules/orders/orders.controller.js';
 import { mediaRouter } from './modules/media/media.controller.js';
 import { settingsRouter } from './modules/settings/settings.controller.js';
+import { paymentsRouter } from './modules/payments/payments.controller.js';
+import { PaymentProvidersService } from './modules/payments/services/payment-providers.service.js';
 import { AuditService } from './modules/audit/audit.service.js';
 import { authenticateToken, requireRoles } from './common/auth.middleware.js';
 import { prisma } from './common/prisma.service.js';
@@ -50,6 +52,7 @@ apiV1.use('/catalog', catalogRouter);
 apiV1.use('/quotations', quotationsRouter);
 apiV1.use('/projects', projectsRouter);
 apiV1.use('/orders', ordersRouter);
+apiV1.use('/payments', paymentsRouter);
 apiV1.use('/media', mediaRouter);
 apiV1.use('/settings', settingsRouter);
 
@@ -158,6 +161,10 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 if (process.env.NODE_ENV !== 'test') {
+  PaymentProvidersService.seedDefaultProviders().catch((e) => {
+    console.warn('Payment providers seed check:', e.message);
+  });
+
   app.listen(PORT, () => {
     console.log(`🏛️  Al-Waheed API Server running on port http://localhost:${PORT}/api/v1`);
     console.log(`🩺 Health check available at http://localhost:${PORT}/health`);
@@ -165,3 +172,4 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 export default app;
+

@@ -73,6 +73,82 @@ authRouter.get('/me', authenticateToken, async (req: Request, res: Response) => 
   }
 });
 
+// 3.1 Update User Profile
+authRouter.patch('/profile', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const ip = req.ip || req.socket.remoteAddress;
+    const updated = await AuthService.updateProfile(req.user!.userId, req.body, ip);
+    return res.json({
+      success: true,
+      data: updated,
+      message: 'تم تحديث الملف الشخصي بنجاح',
+    });
+  } catch (err: any) {
+    return res.status(400).json({
+      success: false,
+      error: { code: 'UPDATE_PROFILE_FAILED', message: err.message },
+    });
+  }
+});
+
+// 3.2 Change Password
+authRouter.post('/change-password', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const ip = req.ip || req.socket.remoteAddress;
+    const result = await AuthService.changePassword(
+      req.user!.userId,
+      { currentPassword, newPassword },
+      false,
+      ip
+    );
+    return res.json({
+      success: true,
+      data: result,
+      message: 'تم تغيير كلمة المرور بنجاح',
+    });
+  } catch (err: any) {
+    return res.status(400).json({
+      success: false,
+      error: { code: 'CHANGE_PASSWORD_FAILED', message: err.message },
+    });
+  }
+});
+
+// 3.3 Security Overview & Audit Logs
+authRouter.get('/security-overview', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const overview = await AuthService.getSecurityOverview(req.user!.userId);
+    return res.json({
+      success: true,
+      data: overview,
+    });
+  } catch (err: any) {
+    return res.status(500).json({
+      success: false,
+      error: { code: 'SECURITY_OVERVIEW_FAILED', message: err.message },
+    });
+  }
+});
+
+// 3.4 Deactivate Own Account
+authRouter.post('/deactivate', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const ip = req.ip || req.socket.remoteAddress;
+    const result = await AuthService.deactivateAccount(req.user!.userId, ip);
+    return res.json({
+      success: true,
+      data: result,
+      message: 'تم تعطيل الحساب بنجاح',
+    });
+  } catch (err: any) {
+    return res.status(400).json({
+      success: false,
+      error: { code: 'DEACTIVATE_FAILED', message: err.message },
+    });
+  }
+});
+
 // --- Admin Management Routes ---
 
 // 4. List All Users
@@ -164,6 +240,42 @@ authRouter.delete(
       return res.status(400).json({
         success: false,
         error: { code: 'DELETE_USER_FAILED', message: err.message },
+      });
+    }
+  }
+);
+
+// 8. Admin Reset User Password
+authRouter.post(
+  '/users/:id/reset-password',
+  authenticateToken,
+  requireRoles('SUPER_ADMIN', 'ADMIN'),
+  async (req: Request, res: Response) => {
+    try {
+      const { newPassword } = req.body;
+      if (!newPassword || newPassword.length < 6) {
+        return res.status(400).json({
+          success: false,
+          error: { code: 'INVALID_PASSWORD', message: 'كلمة المرور يجب ألا تقل عن 6 أحرف' },
+        });
+      }
+
+      const ip = req.ip || req.socket.remoteAddress;
+      const result = await AuthService.changePassword(
+        req.params.id,
+        { newPassword },
+        true,
+        ip
+      );
+      return res.json({
+        success: true,
+        data: result,
+        message: 'تم إعادة تعيين كلمة المرور للمستخدم بنجاح',
+      });
+    } catch (err: any) {
+      return res.status(400).json({
+        success: false,
+        error: { code: 'RESET_PASSWORD_FAILED', message: err.message },
       });
     }
   }

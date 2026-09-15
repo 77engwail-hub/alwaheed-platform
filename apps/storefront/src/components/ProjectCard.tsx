@@ -37,8 +37,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
 
         {/* Content */}
-        <div className="p-5 space-y-3">
-          <h3 className="text-base font-bold text-stone-100 group-hover:text-gold transition-colors line-clamp-2 leading-snug">
+        <div className="p-4 sm:p-4.5 space-y-2.5">
+          <h3 className="text-sm sm:text-[15px] font-bold text-stone-100 group-hover:text-gold transition-colors line-clamp-2 leading-snug">
             <Link href={`/projects/${project.slug}`}>{project.titleAr}</Link>
           </h3>
 
@@ -48,11 +48,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
           {/* Materials Used */}
           {project.materialsUsed && project.materialsUsed.length > 0 && (
-            <div className="flex flex-wrap gap-1 pt-1">
+            <div className="flex flex-wrap gap-1 pt-0.5">
               {project.materialsUsed.slice(0, 3).map((m: any, idx: number) => (
                 <span
                   key={idx}
-                  className="text-[11px] bg-stone-800 text-stone-300 px-2 py-0.5 rounded border border-stone-700 flex items-center gap-1"
+                  className="text-[10px] sm:text-[11px] bg-stone-800 text-stone-300 px-2 py-0.5 rounded border border-stone-700 flex items-center gap-1"
                 >
                   <Layers className="w-2.5 h-2.5 text-gold" />
                   <span>{m.nameAr || m}</span>
@@ -64,13 +64,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </div>
 
       {/* CTA */}
-      <div className="p-5 pt-0 border-t border-stone-800/80 mt-2">
+      <div className="p-4 sm:p-4.5 pt-0 border-t border-stone-800/80 mt-1">
         <Link
           href={`/projects/${project.slug}`}
-          className="w-full mt-3 bg-stone-800 hover:bg-gold hover:text-stone-950 text-stone-200 text-xs font-bold py-2.5 px-4 rounded-lg flex items-center justify-between transition-all"
+          className="w-full mt-2.5 bg-stone-800 hover:bg-gold hover:text-stone-950 text-stone-200 text-xs font-bold py-2 px-3 rounded-lg flex items-center justify-between transition-all"
         >
-          <span>استعراض تفاصيل المشروع والمعرض</span>
-          <ArrowLeft className="w-4 h-4" />
+          <span>استعراض تفاصيل المشروع</span>
+          <ArrowLeft className="w-3.5 h-3.5" />
         </Link>
       </div>
     </div>

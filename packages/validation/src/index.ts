@@ -5,7 +5,7 @@ import { z } from 'zod';
 // ==============================================================================
 
 export const LoginSchema = z.object({
-  email: z.string().email('يرجى إدخال بريد إلكتروني صالح'),
+  email: z.string().min(1, 'يرجى إدخال البريد الإلكتروني أو رقم الهاتف أو اسم المستخدم'),
   password: z.string().min(6, 'كلمة المرور يجب أن لا تقل عن 6 أحرف'),
 });
 
@@ -205,3 +205,145 @@ export const ContactMessageSchema = z.object({
 });
 
 export type ContactMessageInput = z.infer<typeof ContactMessageSchema>;
+
+// ==============================================================================
+// 7. Payment & Yemeni Wallets Schemas
+// ==============================================================================
+
+export const InitiatePaymentSchema = z.object({
+  orderId: z.string().min(1, 'معرف الطلب مطلوب'),
+  providerCode: z.string().min(1, 'يرجى اختيار المحفظة الإلكترونية'),
+  accountId: z.string().optional().nullable(),
+  paymentMethodType: z.enum([
+    'MANUAL_RECEIPT',
+    'MERCHANT_PAYMENT',
+    'WALLET_TRANSFER',
+    'QR_PAYMENT',
+    'API',
+    'WEBHOOK',
+  ]),
+  amount: z.number().positive('المبلغ يجب أن يكون أكبر من صفر'),
+  currency: z.string().default('YER'),
+  senderName: z.string().optional().nullable(),
+  senderWalletNumber: z.string().optional().nullable(),
+});
+
+export type InitiatePaymentInput = z.infer<typeof InitiatePaymentSchema>;
+
+export const UploadReceiptSchema = z.object({
+  transactionId: z.string().min(1, 'معرف المعاملة مطلوب'),
+  fileUrl: z.string().url('رابط ملف الإشعار غير صالح'),
+  fileName: z.string().min(1, 'اسم الملف مطلوب'),
+  fileSize: z.number().positive('حجم الملف غير صالح'),
+  mimeType: z.string().min(1, 'نوع الملف مطلوب'),
+  fileHashSha256: z.string().optional(),
+  perceptualHash: z.string().optional(),
+  customerNote: z.string().optional().nullable(),
+});
+
+export type UploadReceiptInput = z.infer<typeof UploadReceiptSchema>;
+
+export const ConfirmPaymentSchema = z.object({
+  transactionId: z.string().min(1, 'معرف المعاملة مطلوب'),
+  confirmedAmount: z.number().positive('المبلغ المؤكد يجب أن يكون قيمة موجبة'),
+  isPartial: z.boolean().default(false),
+  manualAdjustmentReason: z.string().optional().nullable(),
+  orderAllocations: z
+    .array(
+      z.object({
+        orderId: z.string(),
+        amount: z.number().positive(),
+      })
+    )
+    .optional(),
+  note: z.string().optional().nullable(),
+});
+
+export type ConfirmPaymentInput = z.infer<typeof ConfirmPaymentSchema>;
+
+export const RejectPaymentSchema = z.object({
+  transactionId: z.string().min(1, 'معرف المعاملة مطلوب'),
+  reason: z.string().min(3, 'يرجى كتابة سبب رفض الدفع (3 أحرف على الأقل)'),
+  requestNewReceipt: z.boolean().default(false),
+});
+
+export type RejectPaymentInput = z.infer<typeof RejectPaymentSchema>;
+
+export const CreatePaymentProviderSchema = z.object({
+  code: z.string().min(2, 'رمز المحفظة الفريد مطلوب (مثال: ONE_CASH, FLOOSAK)'),
+  nameAr: z.string().min(2, 'الاسم العربي مطلوب'),
+  nameEn: z.string().min(2, 'الاسم بالإنجليزية مطلوب'),
+  entityIssuer: z.string().optional().nullable(),
+  logoUrl: z.string().optional().nullable(),
+  isActive: z.boolean().default(true),
+  displayOrder: z.number().int().default(0),
+  supportedMethods: z
+    .array(
+      z.enum([
+        'MANUAL_RECEIPT',
+        'MERCHANT_PAYMENT',
+        'WALLET_TRANSFER',
+        'QR_PAYMENT',
+        'API',
+        'WEBHOOK',
+      ])
+    )
+    .default(['MANUAL_RECEIPT', 'MERCHANT_PAYMENT', 'WALLET_TRANSFER']),
+  defaultCurrency: z.string().default('YER'),
+  minAmount: z.number().nonnegative().optional().nullable(),
+  maxAmount: z.number().positive().optional().nullable(),
+  instructionsAr: z.string().optional().nullable(),
+  instructionsEn: z.string().optional().nullable(),
+  isAiVerificationEnabled: z.boolean().default(true),
+  isApiVerificationEnabled: z.boolean().default(false),
+  isWebhookEnabled: z.boolean().default(false),
+});
+
+export type CreatePaymentProviderInput = z.infer<typeof CreatePaymentProviderSchema>;
+
+export const UpdatePaymentProviderSchema = z.object({
+  nameAr: z.string().min(2, 'الاسم العربي مطلوب'),
+  nameEn: z.string().min(2, 'الاسم الإنجليزي مطلوب'),
+  entityIssuer: z.string().optional().nullable(),
+  logoUrl: z.string().optional().nullable(),
+  isActive: z.boolean().default(true),
+  displayOrder: z.number().int().default(0),
+  supportedMethods: z.array(
+    z.enum([
+      'MANUAL_RECEIPT',
+      'MERCHANT_PAYMENT',
+      'WALLET_TRANSFER',
+      'QR_PAYMENT',
+      'API',
+      'WEBHOOK',
+    ])
+  ),
+  defaultCurrency: z.string().default('YER'),
+  minAmount: z.number().nonnegative().optional().nullable(),
+  maxAmount: z.number().positive().optional().nullable(),
+  instructionsAr: z.string().optional().nullable(),
+  instructionsEn: z.string().optional().nullable(),
+  isAiVerificationEnabled: z.boolean().default(true),
+  isApiVerificationEnabled: z.boolean().default(false),
+  isWebhookEnabled: z.boolean().default(false),
+});
+
+export type UpdatePaymentProviderInput = z.infer<typeof UpdatePaymentProviderSchema>;
+
+export const SaveMerchantAccountSchema = z.object({
+  providerId: z.string().min(1, 'معرف المحفظة مطلوب'),
+  accountName: z.string().min(2, 'اسم الحساب مطلوب'),
+  accountNumber: z.string().optional().nullable(),
+  walletNumber: z.string().optional().nullable(),
+  merchantId: z.string().optional().nullable(),
+  merchantPaymentNumber: z.string().optional().nullable(),
+  qrCodeUrl: z.string().optional().nullable(),
+  accountHolderName: z.string().min(2, 'اسم صاحب الحساب مطلوب'),
+  currency: z.string().default('YER'),
+  isActive: z.boolean().default(true),
+  isDefault: z.boolean().default(false),
+});
+
+export type SaveMerchantAccountInput = z.infer<typeof SaveMerchantAccountSchema>;
+
+

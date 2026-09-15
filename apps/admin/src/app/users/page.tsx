@@ -13,10 +13,13 @@ import {
   Mail,
   Phone,
   Lock,
+  Key,
   Search,
   CheckCircle2,
   AlertCircle,
   Clock,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { getAdminToken } from '../../lib/admin-api';
 
@@ -35,6 +38,9 @@ export default function UsersManagementPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingUser, setEditingUser] = useState<any>(null);
+  const [resetUser, setResetUser] = useState<any>(null);
+  const [newResetPassword, setNewResetPassword] = useState('');
+  const [isResetting, setIsResetting] = useState(false);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
@@ -154,6 +160,42 @@ export default function UsersManagementPage() {
       fetchUsers();
     } catch (err: any) {
       setError(err.message);
+    }
+  };
+
+  const handleAdminResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!resetUser || !newResetPassword || newResetPassword.length < 6) {
+      setError('كلمة المرور يجب ألا تقل عن 6 أحرف');
+      return;
+    }
+
+    setIsResetting(true);
+    setError('');
+    setSuccessMsg('');
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+      const token = getAdminToken();
+      const res = await fetch(`${apiUrl}/auth/users/${resetUser.id}/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ newPassword: newResetPassword }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error?.message || 'فشل إعادة تعيين كلمة المرور');
+
+      setSuccessMsg(`تم بنجاح تغيير كلمة المرور للمستخدم (${resetUser.name})`);
+      setResetUser(null);
+      setNewResetPassword('');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsResetting(false);
     }
   };
 
@@ -335,13 +377,26 @@ export default function UsersManagementPage() {
                       </td>
 
                       <td className="py-4 px-4 text-center">
-                        <button
-                          onClick={() => handleDeleteUser(u.id, u.name)}
-                          className="p-1.5 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
-                          title="حذف المستخدم"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        <div className="flex items-center justify-center gap-1.5">
+                          <button
+                            onClick={() => {
+                              setResetUser(u);
+                              setNewResetPassword('');
+                              setError('');
+                            }}
+                            className="p-1.5 text-stone-400 hover:text-gold hover:bg-stone-900 rounded-lg transition-colors"
+                            title="إعادة تعيين كلمة المرور للمستخدم"
+                          >
+                            <Key className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteUser(u.id, u.name)}
+                            className="p-1.5 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                            title="حذف المستخدم"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -460,6 +515,64 @@ export default function UsersManagementPage() {
                   className="bg-gold hover:bg-gold-dark text-stone-950 font-bold px-6 py-2.5 rounded-xl shadow-sm transition-all"
                 >
                   حفظ وإنشاء الحساب
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Reset Password */}
+      {resetUser && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="max-w-md w-full bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-stone-200 space-y-5 animate-in fade-in zoom-in-95">
+            <div className="flex justify-between items-center pb-3 border-b border-stone-100">
+              <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
+                <Key className="w-5 h-5 text-gold" />
+                <span>إعادة تعيين كلمة المرور</span>
+              </h2>
+              <button
+                onClick={() => setResetUser(null)}
+                className="text-stone-400 hover:text-stone-700 text-sm font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p className="text-xs text-stone-600">
+              أنت على وشك تعيين كلمة مرور جديدة للمستخدم:{' '}
+              <strong className="text-stone-900 font-bold">{resetUser.name}</strong> (
+              <span className="font-mono text-gold">{resetUser.email}</span>)
+            </p>
+
+            <form onSubmit={handleAdminResetPassword} className="space-y-4 text-xs">
+              <div className="space-y-1">
+                <label className="font-bold text-stone-700">كلمة المرور الجديدة *</label>
+                <input
+                  type="password"
+                  required
+                  placeholder="أدخل كلمة المرور الجديدة (6 خانات على الأقل)"
+                  value={newResetPassword}
+                  onChange={(e) => setNewResetPassword(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:border-gold outline-none font-mono"
+                />
+              </div>
+
+              <div className="pt-3 flex justify-end gap-2 border-t border-stone-100">
+                <button
+                  type="button"
+                  onClick={() => setResetUser(null)}
+                  className="px-4 py-2 rounded-xl text-stone-600 hover:bg-stone-100 font-bold"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="submit"
+                  disabled={isResetting}
+                  className="bg-stone-900 hover:bg-gold hover:text-stone-950 text-gold font-bold px-5 py-2 rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                >
+                  <Key className="w-4 h-4" />
+                  <span>{isResetting ? 'جاري الحفظ...' : 'تحديث كلمة المرور'}</span>
                 </button>
               </div>
             </form>

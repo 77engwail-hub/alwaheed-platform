@@ -48,8 +48,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Content */}
-        <div className="p-5 space-y-3">
-          <h3 className="text-base font-bold text-stone-900 group-hover:text-gold-dark transition-colors line-clamp-2 leading-snug">
+        <div className="p-4 sm:p-4.5 space-y-2.5">
+          <h3 className="text-sm sm:text-[15px] font-bold text-stone-900 group-hover:text-gold-dark transition-colors line-clamp-2 leading-snug">
             <Link href={`/products/${product.slug}`}>{product.titleAr}</Link>
           </h3>
 
@@ -59,11 +59,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           {/* Materials Tag Preview */}
           {product.materials && product.materials.length > 0 && (
-            <div className="flex flex-wrap gap-1 pt-1">
+            <div className="flex flex-wrap gap-1 pt-0.5">
               {product.materials.slice(0, 2).map((m: any, idx: number) => (
                 <span
                   key={idx}
-                  className="text-[11px] bg-stone-100 text-stone-700 px-2 py-0.5 rounded border border-stone-200 flex items-center gap-1"
+                  className="text-[10px] sm:text-[11px] bg-stone-100 text-stone-700 px-2 py-0.5 rounded border border-stone-200 flex items-center gap-1"
                 >
                   <Layers className="w-2.5 h-2.5 text-gold-dark" />
                   <span>{m.nameAr || m}</span>
@@ -75,19 +75,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       {/* Footer & Actions */}
-      <div className="p-5 pt-0 border-t border-stone-100 mt-2 space-y-3">
-        <div className="flex items-baseline justify-between pt-3">
+      <div className="p-4 sm:p-4.5 pt-0 border-t border-stone-100 mt-2 space-y-2.5">
+        <div className="flex items-baseline justify-between pt-2.5">
           <div className="flex flex-col">
-            <span className="text-[11px] text-stone-400">طريقة التسعير</span>
-            <span className="text-sm font-bold text-stone-900 font-mono">{priceFormatted}</span>
+            <span className="text-[10px] text-stone-400">طريقة التسعير</span>
+            <span className="text-xs sm:text-sm font-bold text-stone-900 font-mono">{priceFormatted}</span>
           </div>
-          <span className="text-xs text-stone-500 font-medium">{formatUnit(product.unit)}</span>
+          <span className="text-[11px] text-stone-500 font-medium">{formatUnit(product.unit)}</span>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 pt-1">
+        <div className="grid grid-cols-2 gap-2 pt-0.5">
           <Link
             href={`/products/${product.slug}`}
-            className="w-full bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs font-bold py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-colors"
+            className="w-full bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs font-bold py-2 px-2.5 rounded-lg flex items-center justify-center gap-1 transition-colors"
           >
             <span>التفاصيل</span>
             <ArrowLeft className="w-3.5 h-3.5" />
@@ -98,7 +98,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-xs font-bold py-2.5 px-2 rounded-lg flex items-center justify-center gap-1 transition-colors"
+            className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-xs font-bold py-2 px-2 rounded-lg flex items-center justify-center gap-1 transition-colors"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>واتساب</span>
