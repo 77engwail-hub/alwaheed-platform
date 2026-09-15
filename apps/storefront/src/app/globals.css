@@ -3,92 +3,140 @@
 @tailwind utilities;
 
 @layer base {
+  /* 1. DARK THEME (الملكي الأسود والذهب - Default) */
   :root,
   html[data-theme="dark"] {
     --background: #0c0a09;
     --foreground: #f5f5f4;
     --card: #1c1917;
     --card-foreground: #fafaf9;
+    --card-border: #292524;
     --primary: #d4af37;
     --primary-foreground: #0c0a09;
     --accent: #d4af37;
     --accent-foreground: #0c0a09;
     --border: #292524;
+    --input-bg: #141210;
+    --input-border: #38332f;
+    --input-text: #fafaf9;
+    --input-placeholder: #a8a29e;
+    --input-label: #e7e5e4;
+    --input-icon: #a8a29e;
     --surface-glass: rgba(28, 25, 23, 0.85);
     --gold-glow: 0 0 25px rgba(212, 175, 55, 0.25);
   }
 
+  /* 2. LIGHT THEME (الرخام الإمبراطوري الأبيض) */
   html[data-theme="light"] {
     --background: #faf8f5;
     --foreground: #1c1917;
     --card: #ffffff;
     --card-foreground: #1c1917;
+    --card-border: #e7e5e4;
     --primary: #b8860b;
     --primary-foreground: #ffffff;
     --accent: #d4af37;
     --accent-foreground: #1c1917;
     --border: #e7e5e4;
-    --surface-glass: rgba(255, 255, 255, 0.85);
+    --input-bg: #ffffff;
+    --input-border: #d6d3d1;
+    --input-text: #1c1917;
+    --input-placeholder: #78716c;
+    --input-label: #292524;
+    --input-icon: #78716c;
+    --surface-glass: rgba(255, 255, 255, 0.9);
     --gold-glow: 0 0 20px rgba(184, 134, 11, 0.15);
   }
 
+  /* 3. HERITAGE THEME (التراث الصنعاني العريق) */
   html[data-theme="heritage"] {
     --background: #1a1412;
     --foreground: #f7eedd;
     --card: #281d19;
     --card-foreground: #f7eedd;
+    --card-border: #3d2c25;
     --primary: #e09848;
     --primary-foreground: #1a1412;
     --accent: #e09848;
     --accent-foreground: #1a1412;
     --border: #3d2c25;
+    --input-bg: #1e1512;
+    --input-border: #4e382f;
+    --input-text: #f7eedd;
+    --input-placeholder: #bfa593;
+    --input-label: #edd6bf;
+    --input-icon: #bfa593;
     --surface-glass: rgba(40, 29, 25, 0.88);
     --gold-glow: 0 0 25px rgba(224, 152, 72, 0.25);
   }
 
+  /* 4. EMERALD THEME (الزمردي المعماري الفاخر) */
   html[data-theme="emerald"] {
     --background: #061a14;
     --foreground: #ecfdf5;
     --card: #0c2b22;
     --card-foreground: #f0fdf4;
+    --card-border: #144637;
     --primary: #10b981;
     --primary-foreground: #061a14;
     --accent: #d4af37;
     --accent-foreground: #061a14;
     --border: #144637;
+    --input-bg: #071f18;
+    --input-border: #1c5947;
+    --input-text: #ecfdf5;
+    --input-placeholder: #6ee7b7;
+    --input-label: #d1fae5;
+    --input-icon: #6ee7b7;
     --surface-glass: rgba(12, 43, 34, 0.88);
     --gold-glow: 0 0 25px rgba(16, 185, 129, 0.25);
   }
 
+  /* 5. SAPPHIRE THEME (اللازوردي الكريستالي) */
   html[data-theme="sapphire"] {
     --background: #091224;
     --foreground: #eff6ff;
     --card: #111e3b;
     --card-foreground: #f8fafc;
+    --card-border: #1e3a6d;
     --primary: #38bdf8;
     --primary-foreground: #091224;
     --accent: #d4af37;
     --accent-foreground: #091224;
     --border: #1e3a6d;
+    --input-bg: #0c162b;
+    --input-border: #23437c;
+    --input-text: #eff6ff;
+    --input-placeholder: #7dd3fc;
+    --input-label: #dbeafe;
+    --input-icon: #7dd3fc;
     --surface-glass: rgba(17, 30, 59, 0.88);
     --gold-glow: 0 0 25px rgba(56, 189, 248, 0.25);
   }
 
+  /* 6. SANDSTONE THEME (الحجر الرملي الصحراوي) */
   html[data-theme="sandstone"] {
     --background: #fdf6ec;
     --foreground: #291e14;
     --card: #ffffff;
     --card-foreground: #291e14;
+    --card-border: #edd6bf;
     --primary: #c27829;
     --primary-foreground: #ffffff;
     --accent: #d4af37;
     --accent-foreground: #291e14;
     --border: #edd6bf;
+    --input-bg: #fdf9f4;
+    --input-border: #dfc2a2;
+    --input-text: #291e14;
+    --input-placeholder: #8c6d48;
+    --input-label: #4a3420;
+    --input-icon: #8c6d48;
     --surface-glass: rgba(255, 255, 255, 0.9);
     --gold-glow: 0 0 20px rgba(194, 120, 41, 0.18);
   }
 
-  /* Font Size Scales - Refined for Balanced Desktop & Mobile Proportions */
+  /* Font Size Scales */
   html[data-font-size="small"] {
     font-size: 13px;
   }
@@ -103,27 +151,99 @@
     font-size: 18px;
   }
 
-  /* Font Family Switching */
-  html[data-font-family="tajawal"] body {
-    font-family: 'Tajawal', sans-serif;
+  /* Font Family Universal Switching across all body, inputs, textareas, selects, and buttons */
+  html[data-font-family="tajawal"],
+  html[data-font-family="tajawal"] body,
+  html[data-font-family="tajawal"] input,
+  html[data-font-family="tajawal"] textarea,
+  html[data-font-family="tajawal"] select,
+  html[data-font-family="tajawal"] button,
+  html[data-font-family="tajawal"] label,
+  html[data-font-family="tajawal"] p,
+  html[data-font-family="tajawal"] h1,
+  html[data-font-family="tajawal"] h2,
+  html[data-font-family="tajawal"] h3,
+  html[data-font-family="tajawal"] h4,
+  html[data-font-family="tajawal"] h5,
+  html[data-font-family="tajawal"] h6,
+  html[data-font-family="tajawal"] span,
+  html[data-font-family="tajawal"] a {
+    font-family: 'Tajawal', sans-serif !important;
   }
-  html[data-font-family="alexandria"] body {
-    font-family: 'Alexandria', 'Tajawal', sans-serif;
+
+  html[data-font-family="alexandria"],
+  html[data-font-family="alexandria"] body,
+  html[data-font-family="alexandria"] input,
+  html[data-font-family="alexandria"] textarea,
+  html[data-font-family="alexandria"] select,
+  html[data-font-family="alexandria"] button,
+  html[data-font-family="alexandria"] label,
+  html[data-font-family="alexandria"] p,
+  html[data-font-family="alexandria"] h1,
+  html[data-font-family="alexandria"] h2,
+  html[data-font-family="alexandria"] h3,
+  html[data-font-family="alexandria"] h4,
+  html[data-font-family="alexandria"] h5,
+  html[data-font-family="alexandria"] h6,
+  html[data-font-family="alexandria"] span,
+  html[data-font-family="alexandria"] a {
+    font-family: 'Alexandria', 'Tajawal', sans-serif !important;
   }
-  html[data-font-family="almarai"] body {
-    font-family: 'Almarai', 'Tajawal', sans-serif;
+
+  html[data-font-family="almarai"],
+  html[data-font-family="almarai"] body,
+  html[data-font-family="almarai"] input,
+  html[data-font-family="almarai"] textarea,
+  html[data-font-family="almarai"] select,
+  html[data-font-family="almarai"] button,
+  html[data-font-family="almarai"] label,
+  html[data-font-family="almarai"] p,
+  html[data-font-family="almarai"] h1,
+  html[data-font-family="almarai"] h2,
+  html[data-font-family="almarai"] h3,
+  html[data-font-family="almarai"] h4,
+  html[data-font-family="almarai"] h5,
+  html[data-font-family="almarai"] h6,
+  html[data-font-family="almarai"] span,
+  html[data-font-family="almarai"] a {
+    font-family: 'Almarai', 'Tajawal', sans-serif !important;
   }
-  html[data-font-family="cairo"] body {
-    font-family: 'Cairo', 'Tajawal', sans-serif;
+
+  html[data-font-family="cairo"],
+  html[data-font-family="cairo"] body,
+  html[data-font-family="cairo"] input,
+  html[data-font-family="cairo"] textarea,
+  html[data-font-family="cairo"] select,
+  html[data-font-family="cairo"] button,
+  html[data-font-family="cairo"] label,
+  html[data-font-family="cairo"] p,
+  html[data-font-family="cairo"] h1,
+  html[data-font-family="cairo"] h2,
+  html[data-font-family="cairo"] h3,
+  html[data-font-family="cairo"] h4,
+  html[data-font-family="cairo"] h5,
+  html[data-font-family="cairo"] h6,
+  html[data-font-family="cairo"] span,
+  html[data-font-family="cairo"] a {
+    font-family: 'Cairo', 'Tajawal', sans-serif !important;
   }
 
   /* High Contrast Accessibility Mode */
   html[data-high-contrast="true"] {
     --foreground: #ffffff !important;
+    --card: #000000 !important;
+    --card-border: #d4af37 !important;
+    --card-foreground: #ffffff !important;
+    --input-bg: #050505 !important;
+    --input-border: #d4af37 !important;
+    --input-text: #ffffff !important;
+    --input-placeholder: #e5e5e5 !important;
+    --input-label: #ffffff !important;
     --border: #d4af37 !important;
   }
   html[data-high-contrast="true"] p,
-  html[data-high-contrast="true"] span {
+  html[data-high-contrast="true"] span,
+  html[data-high-contrast="true"] label {
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
   }
 
@@ -142,6 +262,7 @@
     background-size: 28px 28px;
   }
 
+  /* Base Body Styles */
   body {
     background-color: var(--background);
     color: var(--foreground);
@@ -152,6 +273,37 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Global Form Control Styles for Crystal-Clear Theme Harmony */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+  textarea,
+  select {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--input-border);
+    font-family: inherit;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"])::placeholder,
+  textarea::placeholder {
+    color: var(--input-placeholder) !important;
+    opacity: 1 !important;
+    font-family: inherit;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25) !important;
+    outline: none !important;
+  }
+
+  label {
+    color: var(--input-label);
+    font-family: inherit;
   }
 }
 
@@ -174,7 +326,24 @@
   background: #a37c15;
 }
 
-/* Glassmorphic stone card */
+/* Semantic Themed Utility Components */
+.themed-card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.15);
+}
+
+.themed-input {
+  background-color: var(--input-bg) !important;
+  color: var(--input-text) !important;
+  border: 1px solid var(--input-border) !important;
+}
+
+.themed-input::placeholder {
+  color: var(--input-placeholder) !important;
+}
+
 .stone-glass {
   background: var(--surface-glass);
   backdrop-filter: blur(12px);

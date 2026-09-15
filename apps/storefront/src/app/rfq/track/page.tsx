@@ -61,10 +61,10 @@ function RfqTrackingContent() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
       <div className="text-center space-y-3">
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 dark:text-stone-100">
           تتبع حالة طلب عرض السعر (RFQ Tracking)
         </h1>
-        <p className="text-sm text-stone-500 max-w-lg mx-auto">
+        <p className="text-sm text-stone-500 dark:text-stone-400 max-w-lg mx-auto">
           أدخل رقم المعاملة المرجعي (مثل RFQ-2026-0001) للاطلاع على نتائج الدراسة الفنية وعرض السعر المعتمد.
         </p>
       </div>
@@ -76,12 +76,12 @@ function RfqTrackingContent() {
           value={refNumber}
           onChange={(e) => setRefNumber(e.target.value)}
           placeholder="أدخل رمز الطلب مثل: RFQ-2026-0001"
-          className="flex-1 text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none font-mono"
+          className="flex-1 text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none font-mono"
         />
         <button
           type="submit"
           disabled={isLoading || !refNumber}
-          className="bg-stone-900 hover:bg-stone-800 text-stone-100 font-bold px-6 py-3 rounded-xl text-sm transition-colors flex items-center gap-2"
+          className="bg-gold hover:bg-gold-dark text-stone-950 font-bold px-6 py-3 rounded-xl text-sm transition-colors flex items-center gap-2 shadow-md disabled:opacity-50"
         >
           <Search className="w-4 h-4" />
           <span>{isLoading ? 'جاري البحث...' : 'تتبع'}</span>
@@ -89,7 +89,7 @@ function RfqTrackingContent() {
       </form>
 
       {error && (
-        <div className="max-w-xl mx-auto p-4 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
+        <div className="max-w-xl mx-auto p-4 bg-rose-500/10 border border-rose-500/30 text-rose-500 rounded-xl text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
@@ -97,19 +97,19 @@ function RfqTrackingContent() {
 
       {/* Quotation Detail View */}
       {quotation && (
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200 shadow-stone-sm space-y-8">
+        <div className="themed-card rounded-3xl p-6 sm:p-10 space-y-8">
           {/* Top Status Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-stone-100">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-stone-200/40 dark:border-stone-800">
             <div className="space-y-1">
               <span className="text-xs text-stone-400 font-mono">رقم المعاملة:</span>
-              <h2 className="text-xl font-extrabold text-stone-900 font-mono">
+              <h2 className="text-xl font-extrabold text-stone-900 dark:text-stone-100 font-mono">
                 {quotation.referenceNumber}
               </h2>
             </div>
 
             <div className="flex items-center gap-3">
-              <span className="text-xs text-stone-500">الحالة الحالية:</span>
-              <span className="px-3 py-1 rounded-full text-xs font-bold bg-gold/20 text-gold-dark border border-gold/40">
+              <span className="text-xs text-stone-500 dark:text-stone-400">الحالة الحالية:</span>
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-gold/20 text-gold-dark dark:text-gold border border-gold/40">
                 {formatQuotationStatus(quotation.status).label}
               </span>
             </div>
@@ -117,7 +117,7 @@ function RfqTrackingContent() {
 
           {/* Pricing Box if Priced */}
           {quotation.totalQuotedPrice && (
-            <div className="p-6 rounded-2xl bg-stone-900 text-stone-100 space-y-4 shadow-stone-md">
+            <div className="p-6 rounded-2xl bg-stone-900 text-stone-100 space-y-4 shadow-stone-md border border-stone-800">
               <div className="flex flex-col sm:flex-row justify-between sm:items-baseline gap-2">
                 <div>
                   <span className="text-xs text-gold font-bold uppercase tracking-wider block">
@@ -149,39 +149,39 @@ function RfqTrackingContent() {
 
           {/* Request Breakdown */}
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-stone-900 border-r-4 border-gold pr-2">
+            <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100 border-r-4 border-gold pr-2">
               تفاصيل الطلب والبنود
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className="p-4 bg-stone-50 rounded-xl space-y-1">
+              <div className="p-4 bg-stone-500/10 border border-stone-200/40 dark:border-stone-800 rounded-xl space-y-1">
                 <span className="text-stone-400 block">اسم العميل</span>
-                <span className="font-bold text-stone-800">{quotation.customerName}</span>
+                <span className="font-bold text-stone-900 dark:text-stone-100">{quotation.customerName}</span>
               </div>
-              <div className="p-4 bg-stone-50 rounded-xl space-y-1">
+              <div className="p-4 bg-stone-500/10 border border-stone-200/40 dark:border-stone-800 rounded-xl space-y-1">
                 <span className="text-stone-400 block">الموقع / المدينة</span>
-                <span className="font-bold text-stone-800">{quotation.city}</span>
+                <span className="font-bold text-stone-900 dark:text-stone-100">{quotation.city}</span>
               </div>
-              <div className="p-4 bg-stone-50 rounded-xl space-y-1">
+              <div className="p-4 bg-stone-500/10 border border-stone-200/40 dark:border-stone-800 rounded-xl space-y-1">
                 <span className="text-stone-400 block">نوع الحجر المفضل</span>
-                <span className="font-bold text-stone-800">{quotation.preferredStoneType || 'حسب الدراسة الفنية'}</span>
+                <span className="font-bold text-stone-900 dark:text-stone-100">{quotation.preferredStoneType || 'حسب الدراسة الفنية'}</span>
               </div>
-              <div className="p-4 bg-stone-50 rounded-xl space-y-1">
+              <div className="p-4 bg-stone-500/10 border border-stone-200/40 dark:border-stone-800 rounded-xl space-y-1">
                 <span className="text-stone-400 block">تاريخ إرسال الطلب</span>
-                <span className="font-bold text-stone-800 font-mono">
+                <span className="font-bold text-stone-900 dark:text-stone-100 font-mono">
                   {new Date(quotation.createdAt).toLocaleDateString('ar-YE')}
                 </span>
               </div>
             </div>
 
-            <div className="p-4 bg-stone-50 rounded-xl text-xs space-y-1">
+            <div className="p-4 bg-stone-500/10 border border-stone-200/40 dark:border-stone-800 rounded-xl text-xs space-y-1">
               <span className="text-stone-400 block">الوصف المرفق:</span>
-              <p className="text-stone-700 leading-relaxed">{quotation.description}</p>
+              <p className="text-stone-800 dark:text-stone-200 leading-relaxed">{quotation.description}</p>
             </div>
           </div>
 
           {/* Action CTAs */}
-          <div className="pt-4 border-t border-stone-100 flex flex-col sm:flex-row gap-3 justify-end">
+          <div className="pt-4 border-t border-stone-200/40 dark:border-stone-800 flex flex-col sm:flex-row gap-3 justify-end">
             <a
               href={`https://wa.me/967777360681?text=${encodeURIComponent(
                 `السلام عليكم، أود المتابعة بخصوص عرض السعر رقم ${quotation.referenceNumber}`

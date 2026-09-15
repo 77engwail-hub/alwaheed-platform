@@ -197,16 +197,16 @@ function RfqPageContent() {
           <Sparkles className="w-3.5 h-3.5" />
           <span>محرك التسعير وطلبات التصاميم المخصصة</span>
         </span>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 dark:text-stone-100">
           طلب عرض سعر / دراسة مخطط معماري (RFQ)
         </h1>
-        <p className="text-sm text-stone-500 max-w-xl mx-auto">
+        <p className="text-sm text-stone-500 dark:text-stone-400 max-w-xl mx-auto">
           أدخل تفاصيل مشروعك أو واجهتك، وارفع صور التصاميم أو المخططات الهندسية للحصول على دراسة فنية وجدول كميات معتمد.
         </p>
       </div>
 
       {errorMessage && (
-        <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
+        <div className="p-4 bg-rose-500/10 border border-rose-500/30 text-rose-500 rounded-xl text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMessage}</span>
         </div>
@@ -215,77 +215,77 @@ function RfqPageContent() {
       {/* Form Card */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200 shadow-stone-sm space-y-8"
+        className="themed-card rounded-3xl p-6 sm:p-10 space-y-8"
       >
         {/* Section 1: Customer Contact Info */}
         <div className="space-y-4">
-          <h2 className="text-base font-bold text-stone-900 border-r-4 border-gold pr-3">
+          <h2 className="text-base font-bold text-stone-900 dark:text-stone-100 border-r-4 border-gold pr-3">
             1. بيانات العميل والتواصل
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-700">الاسم الكامل *</label>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300">الاسم الكامل *</label>
               <input
                 type="text"
                 required
                 value={formData.customerName}
                 onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
                 placeholder="مثال: الشيخ عبد الله الأحمدي"
-                className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-700">رقم الهاتف *</label>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300">رقم الهاتف *</label>
               <input
                 type="tel"
                 required
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="مثال: 777360681"
-                className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-700">رقم الواتساب (اختياري)</label>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300">رقم الواتساب (اختياري)</label>
               <input
                 type="tel"
                 value={formData.whatsapp}
                 onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                 placeholder="لتلقي عرض السعر والمخططات"
-                className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-700">المدينة / موقع المشروع *</label>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300">المدينة / موقع المشروع *</label>
               <input
                 type="text"
                 required
                 value={formData.city}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 placeholder="مثال: صنعاء - حده"
-                className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
             </div>
           </div>
         </div>
 
         {/* Section 2: Project Specifications */}
-        <div className="space-y-4 pt-4 border-t border-stone-100">
-          <h2 className="text-base font-bold text-stone-900 border-r-4 border-gold pr-3">
+        <div className="space-y-4 pt-4 border-t border-stone-200/40 dark:border-stone-800">
+          <h2 className="text-base font-bold text-stone-900 dark:text-stone-100 border-r-4 border-gold pr-3">
             2. تفاصيل المشروع ونوع الحجر
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-700">نوع المشروع *</label>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300">نوع المشروع *</label>
               <select
                 value={formData.projectType}
                 onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none bg-white"
+                className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               >
                 <option value="VILLA_FACADE">واجهة فيلا سكنية</option>
                 <option value="PALACE_FACADE">واجهة قصر ملكي</option>
@@ -299,51 +299,51 @@ function RfqPageContent() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-700">نوع الحجر المفضل</label>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300">نوع الحجر المفضل</label>
               <input
                 type="text"
                 value={formData.preferredStoneType}
                 onChange={(e) => setFormData({ ...formData, preferredStoneType: e.target.value })}
                 placeholder="مثال: حجر بيج مأربي، حجر حبش، رخام..."
-                className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-bold text-stone-700">الأبعاد التقديرية أو المساحة (إن توفرت)</label>
+            <label className="text-xs font-bold text-stone-700 dark:text-stone-300">الأبعاد التقديرية أو المساحة (إن توفرت)</label>
             <input
               type="text"
               value={formData.dimensions}
               onChange={(e) => setFormData({ ...formData, dimensions: e.target.value })}
               placeholder="مثال: واجهة دورين 14م × 8م (مساحة تقريبية 320 م²)"
-              className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+              className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-bold text-stone-700">وصف المطلوب والملاحظات الفنية *</label>
+            <label className="text-xs font-bold text-stone-700 dark:text-stone-300">وصف المطلوب والملاحظات الفنية *</label>
             <textarea
               required
               rows={4}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="صف بالتفصيل ما ترغب في تنفيذه (عدد النوافذ، رغبتك في التيجان، نوع النقش، أي تفاصيل خاصة)..."
-              className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none resize-none"
+              className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none resize-none"
             />
           </div>
         </div>
 
         {/* Section 3: Upload Blueprints and Design Images */}
-        <div className="space-y-4 pt-4 border-t border-stone-100">
-          <h2 className="text-base font-bold text-stone-900 border-r-4 border-gold pr-3">
+        <div className="space-y-4 pt-4 border-t border-stone-200/40 dark:border-stone-800">
+          <h2 className="text-base font-bold text-stone-900 dark:text-stone-100 border-r-4 border-gold pr-3">
             3. رفع المخططات الهندسية وصور التصاميم
           </h2>
 
-          <div className="border-2 border-dashed border-stone-300 hover:border-gold rounded-2xl p-6 text-center space-y-3 bg-stone-50/50">
+          <div className="border-2 border-dashed border-stone-300 dark:border-stone-700 hover:border-gold rounded-2xl p-6 text-center space-y-3 bg-stone-500/5">
             <Upload className="w-8 h-8 text-stone-400 mx-auto" />
             <div className="space-y-1">
-              <span className="text-xs font-bold text-stone-700 block">
+              <span className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
                 اسحب وأفلت المخطط أو صورة التصميم هنا، أو انقر للاختيار
               </span>
               <span className="text-[11px] text-stone-400 block">
@@ -351,7 +351,7 @@ function RfqPageContent() {
               </span>
             </div>
 
-            <label className="inline-block bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs font-bold py-2 px-4 rounded-lg cursor-pointer transition-colors">
+            <label className="inline-block bg-stone-900 hover:bg-stone-800 border border-gold/40 text-gold text-xs font-bold py-2 px-4 rounded-lg cursor-pointer transition-colors shadow-sm">
               <span>{isUploading ? 'قيد الرفع...' : 'اختر ملف من جهازك'}</span>
               <input
                 type="file"
@@ -366,14 +366,14 @@ function RfqPageContent() {
           {/* Uploaded Files List */}
           {attachments.length > 0 && (
             <div className="space-y-2">
-              <span className="text-xs font-bold text-stone-600 block">الملفات المرفقة:</span>
+              <span className="text-xs font-bold text-stone-600 dark:text-stone-400 block">الملفات المرفقة:</span>
               <div className="space-y-1">
                 {attachments.map((att, idx) => (
                   <div
                     key={idx}
-                    className="p-3 bg-stone-100 rounded-xl flex items-center justify-between text-xs"
+                    className="p-3 bg-stone-500/10 border border-stone-200/40 dark:border-stone-800 rounded-xl flex items-center justify-between text-xs"
                   >
-                    <span className="font-medium text-stone-800 line-clamp-1">{att.fileName}</span>
+                    <span className="font-medium text-stone-800 dark:text-stone-200 line-clamp-1">{att.fileName}</span>
                     <span className="text-stone-400 font-mono">
                       {(att.fileSize / 1024 / 1024).toFixed(2)} MB
                     </span>
@@ -385,8 +385,8 @@ function RfqPageContent() {
         </div>
 
         {/* Section 4: Execution Options & Submit */}
-        <div className="pt-4 border-t border-stone-100 space-y-6">
-          <div className="flex flex-wrap gap-6 text-xs text-stone-700">
+        <div className="pt-4 border-t border-stone-200/40 dark:border-stone-800 space-y-6">
+          <div className="flex flex-wrap gap-6 text-xs text-stone-700 dark:text-stone-300">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"

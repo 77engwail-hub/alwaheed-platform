@@ -442,13 +442,13 @@ export default function CustomerProfilePage() {
       {/* 4. Tab 1: Profile & Personal Info Form */}
       {activeTab === 'profile' && (
         <form onSubmit={handleSaveProfile} className="space-y-6">
-          <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border border-stone-200 dark:border-stone-800 shadow-stone-sm space-y-6">
-            <div className="border-b border-stone-100 dark:border-stone-800 pb-3">
+          <div className="themed-card rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="border-b border-stone-200 dark:border-stone-800 pb-3">
               <h2 className="text-base font-extrabold text-stone-900 dark:text-stone-100 flex items-center gap-2">
                 <User className="w-5 h-5 text-gold" />
                 <span>المعلومات الأساسية وبيانات الاتصال</span>
               </h2>
-              <p className="text-xs text-stone-500 mt-1">
+              <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
                 تُستخدم هذه البيانات في ترويسة عروض الأسعار الهندسية والفواتير وموقع تسليم الأحجار والزخارف.
               </p>
             </div>
@@ -478,7 +478,7 @@ export default function CustomerProfilePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div>
-                <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                   الاسم الكامل / اسم العميل:
                 </label>
                 <input
@@ -486,13 +486,13 @@ export default function CustomerProfilePage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="مثال: م. وائل الشرجبي"
-                  className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-100 font-bold"
+                  className="w-full themed-input rounded-xl p-3 font-bold"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                   البريد الإلكتروني:
                 </label>
                 <input
@@ -500,13 +500,13 @@ export default function CustomerProfilePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-100 font-mono"
+                  className="w-full themed-input rounded-xl p-3 font-mono"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                   رقم الهاتف للتواصل والواتساب:
                 </label>
                 <input
@@ -514,13 +514,13 @@ export default function CustomerProfilePage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="مثال: 777360681"
-                  className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-100 font-mono font-bold"
+                  className="w-full themed-input rounded-xl p-3 font-mono font-bold"
                   dir="ltr"
                 />
               </div>
 
               <div>
-                <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                   اسم المكتب الهندسي / المؤسسة / الشركة (اختياري):
                 </label>
                 <input
@@ -528,18 +528,18 @@ export default function CustomerProfilePage() {
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                   placeholder="مثال: مكتب إعمار للهندسة والمقاولات"
-                  className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-100"
+                  className="w-full themed-input rounded-xl p-3"
                 />
               </div>
 
               <div>
-                <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                   المدينة الافتراضية للتوريد:
                 </label>
                 <select
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-100 font-bold"
+                  className="w-full themed-input rounded-xl p-3 font-bold"
                 >
                   <option value="صنعاء">صنعاء وأمانة العاصمة</option>
                   <option value="عدن">عدن</option>
@@ -555,7 +555,7 @@ export default function CustomerProfilePage() {
               </div>
 
               <div>
-                <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                   العنوان التفصيلي وموقع المشروع:
                 </label>
                 <input
@@ -563,12 +563,12 @@ export default function CustomerProfilePage() {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="مثال: حده - بالقرب من جولة الرويشان"
-                  className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-100"
+                  className="w-full themed-input rounded-xl p-3"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end pt-4 border-t border-stone-100 dark:border-stone-800">
+            <div className="flex justify-end pt-4 border-t border-stone-200 dark:border-stone-800">
               <button
                 type="submit"
                 disabled={isSaving}
@@ -588,21 +588,21 @@ export default function CustomerProfilePage() {
           {/* Change Password Card */}
           <form
             onSubmit={handleChangePassword}
-            className="bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border border-stone-200 dark:border-stone-800 shadow-stone-sm space-y-6"
+            className="themed-card rounded-3xl p-6 sm:p-8 space-y-6"
           >
-            <div className="border-b border-stone-100 dark:border-stone-800 pb-3">
+            <div className="border-b border-stone-200 dark:border-stone-800 pb-3">
               <h2 className="text-base font-extrabold text-stone-900 dark:text-stone-100 flex items-center gap-2">
                 <Lock className="w-5 h-5 text-gold" />
                 <span>تحديث وتغيير كلمة المرور</span>
               </h2>
-              <p className="text-xs text-stone-500 mt-1">
+              <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
                 احرص على استخدام كلمة مرور قوية تحتوي على أرقام وحروف لتأمين عروض أسعارك ومعاملاتك المالية.
               </p>
             </div>
 
             <div className="space-y-4 text-xs max-w-lg">
               <div>
-                <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                   كلمة المرور الحالية:
                 </label>
                 <div className="relative">
@@ -611,7 +611,7 @@ export default function CustomerProfilePage() {
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 pr-10 font-mono"
+                    className="w-full themed-input rounded-xl p-3 pr-10 font-mono"
                     required
                   />
                   <button
@@ -626,7 +626,7 @@ export default function CustomerProfilePage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                  <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                     كلمة المرور الجديدة:
                   </label>
                   <input
@@ -634,13 +634,13 @@ export default function CustomerProfilePage() {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="6 أحرف أو أرقام على الأقل"
-                    className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 font-mono"
+                    className="w-full themed-input rounded-xl p-3 font-mono"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="text-stone-600 dark:text-stone-400 font-bold block mb-1">
+                  <label className="text-stone-700 dark:text-stone-300 font-bold block mb-1">
                     تأكيد كلمة المرور الجديدة:
                   </label>
                   <input
@@ -648,7 +648,7 @@ export default function CustomerProfilePage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="إعادة كتابة كلمة المرور"
-                    className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl p-3 font-mono"
+                    className="w-full themed-input rounded-xl p-3 font-mono"
                     required
                   />
                 </div>
@@ -670,7 +670,7 @@ export default function CustomerProfilePage() {
           {/* Two-Factor Authentication & Active Sessions */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* 2FA Card */}
-            <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 border border-stone-200 dark:border-stone-800 shadow-stone-sm space-y-4">
+            <div className="themed-card rounded-3xl p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-extrabold text-stone-900 dark:text-stone-100 flex items-center gap-2">
                   <Smartphone className="w-4 h-4 text-gold" />
@@ -685,7 +685,7 @@ export default function CustomerProfilePage() {
                 إرسال رمز تحقق سري (OTP) لرقم هاتفك عبر الواتساب عند تسجيل الدخول من جهاز غير معروف لزيادة الأمان.
               </p>
 
-              <label className="flex items-center gap-3 p-3 bg-stone-50 dark:bg-stone-950 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
+              <label className="flex items-center gap-3 p-3 bg-stone-500/10 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={twoFactorEnabled}
@@ -702,7 +702,7 @@ export default function CustomerProfilePage() {
             </div>
 
             {/* Active Sessions Card */}
-            <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 border border-stone-200 dark:border-stone-800 shadow-stone-sm space-y-4">
+            <div className="themed-card rounded-3xl p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-extrabold text-stone-900 dark:text-stone-100 flex items-center gap-2">
                   <Laptop className="w-4 h-4 text-gold" />
@@ -711,7 +711,7 @@ export default function CustomerProfilePage() {
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
               </div>
 
-              <div className="p-3.5 bg-stone-50 dark:bg-stone-950 rounded-2xl border border-stone-200 dark:border-stone-800 text-xs space-y-1.5">
+              <div className="p-3.5 bg-stone-500/10 rounded-2xl border border-stone-200 dark:border-stone-800 text-xs space-y-1.5">
                 <div className="flex justify-between items-center">
                   <span className="text-stone-500">الجهاز الحالي:</span>
                   <span className="font-bold text-stone-900 dark:text-stone-100">
@@ -736,7 +736,7 @@ export default function CustomerProfilePage() {
 
           {/* Security Logs Audit */}
           {securityLogs.length > 0 && (
-            <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 border border-stone-200 dark:border-stone-800 shadow-stone-sm space-y-3">
+            <div className="themed-card rounded-3xl p-6 space-y-3">
               <h3 className="text-sm font-extrabold text-stone-900 dark:text-stone-100 flex items-center gap-2">
                 <Clock className="w-4 h-4 text-gold" />
                 <span>سجل النشاط والأمان الأخير</span>
@@ -791,13 +791,13 @@ export default function CustomerProfilePage() {
       {/* 6. Tab 3: Customization & Preferences */}
       {activeTab === 'preferences' && (
         <div className="space-y-6">
-          <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border border-stone-200 dark:border-stone-800 shadow-stone-sm space-y-6">
-            <div className="border-b border-stone-100 dark:border-stone-800 pb-3">
+          <div className="themed-card rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="border-b border-stone-200 dark:border-stone-800 pb-3">
               <h2 className="text-base font-extrabold text-stone-900 dark:text-stone-100 flex items-center gap-2">
                 <Palette className="w-5 h-5 text-gold" />
                 <span>تخصيص المظهر وتجربة الاستخدام</span>
               </h2>
-              <p className="text-xs text-stone-500 mt-1">
+              <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
                 تحديد الثيم الافتراضي، حجم الخط، والعملة المفضلة لعرض تسعيرات وتفاصيل واجهات الحجر.
               </p>
             </div>
@@ -923,14 +923,14 @@ export default function CustomerProfilePage() {
             </div>
 
             {/* Notification Channels */}
-            <div className="border-t border-stone-100 dark:border-stone-800 pt-5 space-y-4">
+            <div className="border-t border-stone-200 dark:border-stone-800 pt-5 space-y-4">
               <h3 className="text-sm font-extrabold text-stone-900 dark:text-stone-100 flex items-center gap-2">
                 <Bell className="w-4 h-4 text-gold" />
                 <span>قنوات التنبيهات وإشعارات الطلبات</span>
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <label className="flex items-center gap-3 p-3 bg-stone-50 dark:bg-stone-950 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 bg-stone-500/10 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={notifyWhatsapp}
@@ -950,7 +950,7 @@ export default function CustomerProfilePage() {
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-3 bg-stone-50 dark:bg-stone-950 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 bg-stone-500/10 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={notifySms}
@@ -970,7 +970,7 @@ export default function CustomerProfilePage() {
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-3 bg-stone-50 dark:bg-stone-950 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 bg-stone-500/10 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={notifyEmail}
@@ -990,7 +990,7 @@ export default function CustomerProfilePage() {
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-3 bg-stone-50 dark:bg-stone-950 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 bg-stone-500/10 rounded-2xl border border-stone-200 dark:border-stone-800 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={notifyOffers}
@@ -1021,14 +1021,14 @@ export default function CustomerProfilePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link
               href="/rfq"
-              className="p-6 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 hover:border-gold/60 shadow-stone-sm transition-all group flex items-center justify-between"
+              className="p-6 themed-card rounded-3xl hover:border-gold/60 shadow-stone-sm transition-all group flex items-center justify-between"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2 font-extrabold text-stone-900 dark:text-stone-100 text-sm">
                   <FileText className="w-4 h-4 text-gold" />
                   <span>طلب عرض سعر جديد (RFQ)</span>
                 </div>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-stone-500 dark:text-stone-400">
                   ارفع مخططاً هندسياً أو اطلب تسعير واجهة حجرية أو نقش خاص.
                 </p>
               </div>
@@ -1037,14 +1037,14 @@ export default function CustomerProfilePage() {
 
             <Link
               href="/rfq/track"
-              className="p-6 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 hover:border-gold/60 shadow-stone-sm transition-all group flex items-center justify-between"
+              className="p-6 themed-card rounded-3xl hover:border-gold/60 shadow-stone-sm transition-all group flex items-center justify-between"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2 font-extrabold text-stone-900 dark:text-stone-100 text-sm">
                   <ShieldCheck className="w-4 h-4 text-gold" />
                   <span>تتبع حالة عروض الأسعار والمعاملات</span>
                 </div>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-stone-500 dark:text-stone-400">
                   أدخل رقم المعاملة للاطلاع على السعر المعتمد والمخططات الفنية.
                 </p>
               </div>
@@ -1053,14 +1053,14 @@ export default function CustomerProfilePage() {
 
             <Link
               href="/checkout"
-              className="p-6 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 hover:border-gold/60 shadow-stone-sm transition-all group flex items-center justify-between"
+              className="p-6 themed-card rounded-3xl hover:border-gold/60 shadow-stone-sm transition-all group flex items-center justify-between"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2 font-extrabold text-stone-900 dark:text-stone-100 text-sm">
                   <ShoppingBag className="w-4 h-4 text-gold" />
                   <span>سداد دفعات المحافظ الإلكترونية</span>
                 </div>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-stone-500 dark:text-stone-400">
                   الدفع عبر ون كاش، فلوسك، جوالي، مسح رمز الـ QR ورفع إشعار التحويل.
                 </p>
               </div>
@@ -1069,14 +1069,14 @@ export default function CustomerProfilePage() {
 
             <Link
               href="/products"
-              className="p-6 bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 hover:border-gold/60 shadow-stone-sm transition-all group flex items-center justify-between"
+              className="p-6 themed-card rounded-3xl hover:border-gold/60 shadow-stone-sm transition-all group flex items-center justify-between"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2 font-extrabold text-stone-900 dark:text-stone-100 text-sm">
                   <Building className="w-4 h-4 text-gold" />
                   <span>تصفح كتالوج الأحجار والزخارف</span>
                 </div>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-stone-500 dark:text-stone-400">
                   استعراض أحجار الحبش، البلق، المشقف، وتيجان الأعمدة المنحوتة.
                 </p>
               </div>

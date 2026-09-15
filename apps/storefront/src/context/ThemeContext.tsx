@@ -98,15 +98,25 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [highContrast, setHighContrastState] = useState<boolean>(false);
   const [stonePattern, setStonePatternState] = useState<boolean>(true);
   const [currency, setCurrencyState] = useState<CurrencyCode>('YER');
+  const applyThemeToDOM = (t: ThemeMode) => {
+    document.documentElement.setAttribute('data-theme', t);
+    if (['dark', 'heritage', 'emerald', 'sapphire'].includes(t)) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+  };
 
   useEffect(() => {
     // 1. Load Theme
     const savedTheme = localStorage.getItem('al_waheed_theme') as ThemeMode;
     if (savedTheme && THEMES.some((t) => t.id === savedTheme)) {
       setThemeState(savedTheme);
-      document.documentElement.setAttribute('data-theme', savedTheme);
+      applyThemeToDOM(savedTheme);
     } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
+      applyThemeToDOM('dark');
     }
 
     // 2. Load Font Size
@@ -150,7 +160,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const setTheme = (newTheme: ThemeMode) => {
     setThemeState(newTheme);
     localStorage.setItem('al_waheed_theme', newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
+    applyThemeToDOM(newTheme);
   };
 
   const setFontSize = (newSize: FontSizeScale) => {

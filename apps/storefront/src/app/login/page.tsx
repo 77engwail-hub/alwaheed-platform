@@ -47,19 +47,19 @@ export default function CustomerLoginPage() {
 
   return (
     <div className="max-w-md mx-auto px-4 py-12 sm:py-16">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-stone-md space-y-6">
+      <div className="themed-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-stone-900 text-gold flex items-center justify-center mx-auto shadow-gold-glow">
+          <div className="w-12 h-12 rounded-2xl bg-stone-900 border border-gold/40 text-gold flex items-center justify-center mx-auto shadow-gold-glow">
             <LogIn className="w-6 h-6" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">تسجيل دخول العملاء</h1>
-          <p className="text-xs text-stone-500">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900 dark:text-stone-100">تسجيل دخول العملاء</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400">
             أدخل بريدك الإلكتروني، رقم هاتفك، أو اسم المستخدم للدخول إلى حسابك.
           </p>
         </div>
 
         {error && (
-          <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
+          <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 text-rose-500 rounded-xl text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -67,7 +67,7 @@ export default function CustomerLoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-4 text-xs">
           <div className="space-y-1">
-            <label className="font-bold text-stone-700">البريد الإلكتروني / رقم الهاتف / اسم المستخدم</label>
+            <label className="font-bold text-stone-700 dark:text-stone-300">البريد الإلكتروني / رقم الهاتف / اسم المستخدم</label>
             <div className="relative">
               <input
                 type="text"
@@ -75,15 +75,15 @@ export default function CustomerLoginPage() {
                 placeholder="778667923 أو name@example.com أو اسم المستخدم"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900 text-xs"
+                className="w-full pl-4 pr-10 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none text-xs"
               />
-              <Mail className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+              <Mail className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5 pointer-events-none" />
             </div>
           </div>
 
           <div className="space-y-1">
             <div className="flex justify-between items-center">
-              <label className="font-bold text-stone-700">كلمة المرور</label>
+              <label className="font-bold text-stone-700 dark:text-stone-300">كلمة المرور</label>
             </div>
             <div className="relative">
               <input
@@ -92,13 +92,13 @@ export default function CustomerLoginPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900 text-xs"
+                className="w-full pl-10 pr-10 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none text-xs"
               />
-              <Lock className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+              <Lock className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5 pointer-events-none" />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-3.5 left-3.5 text-stone-400 hover:text-stone-600 focus:outline-none"
+                className="absolute top-3.5 left-3.5 text-stone-400 hover:text-gold focus:outline-none"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -118,9 +118,9 @@ export default function CustomerLoginPage() {
         {/* Social / OAuth 1-Click Login */}
         <SocialAuthButtons mode="login" />
 
-        <div className="text-center pt-4 border-t border-stone-100 text-xs text-stone-500">
+        <div className="text-center pt-4 border-t border-stone-200/40 dark:border-stone-800 text-xs text-stone-500 dark:text-stone-400">
           <span>ليس لديك حساب بعد؟ </span>
-          <Link href="/register" className="text-gold-dark font-bold hover:underline">
+          <Link href="/register" className="text-gold font-bold hover:underline">
             إنشاء حساب جديد
           </Link>
         </div>

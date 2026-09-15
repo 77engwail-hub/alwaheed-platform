@@ -76,27 +76,27 @@ export default function CustomerRegisterPage() {
 
   return (
     <div className="max-w-md mx-auto px-4 py-12 sm:py-16">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-stone-md space-y-6">
+      <div className="themed-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-stone-900 text-gold flex items-center justify-center mx-auto shadow-gold-glow">
+          <div className="w-12 h-12 rounded-2xl bg-stone-900 border border-gold/40 text-gold flex items-center justify-center mx-auto shadow-gold-glow">
             <UserPlus className="w-6 h-6" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">إنشاء حساب عميل جديد</h1>
-          <p className="text-xs text-stone-500">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900 dark:text-stone-100">إنشاء حساب عميل جديد</h1>
+          <p className="text-xs text-stone-500 dark:text-stone-400">
             سجل حسابك لمتابعة عروض أسعار مشاريعك وواجهات الحجر وحفظ تفاصيل طلباتك.
           </p>
         </div>
 
         {error && (
-          <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
+          <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 text-rose-500 rounded-xl text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+          <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 rounded-xl text-xs flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
             <span>تم إنشاء حسابك بنجاح! جاري تحويلك لحسابك...</span>
           </div>
         )}
@@ -105,16 +105,16 @@ export default function CustomerRegisterPage() {
         <SocialAuthButtons mode="register" />
 
         <div className="relative flex items-center justify-center pt-2">
-          <div className="border-t border-stone-200 w-full" />
-          <span className="bg-white px-3 text-[11px] font-medium text-stone-400 shrink-0">
-            أو التسجيل اليدوي بالبيانات
+          <div className="border-t border-stone-200/40 dark:border-stone-800 w-full" />
+          <span className="bg-[var(--card)] px-3 text-[11px] font-medium text-stone-400 shrink-0">
+            أو التسجيل بالبيانات
           </span>
-          <div className="border-t border-stone-200 w-full" />
+          <div className="border-t border-stone-200/40 dark:border-stone-800 w-full" />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div className="space-y-1">
-            <label className="font-bold text-stone-700">الاسم الكامل *</label>
+            <label className="font-bold text-stone-700 dark:text-stone-300">الاسم الكامل *</label>
             <div className="relative">
               <input
                 type="text"
@@ -122,14 +122,14 @@ export default function CustomerRegisterPage() {
                 placeholder="مثال: عبد الله ناصر"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
+                className="w-full pl-4 pr-10 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
-              <User className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+              <User className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5 pointer-events-none" />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="font-bold text-stone-700">البريد الإلكتروني *</label>
+            <label className="font-bold text-stone-700 dark:text-stone-300">البريد الإلكتروني *</label>
             <div className="relative">
               <input
                 type="email"
@@ -137,28 +137,28 @@ export default function CustomerRegisterPage() {
                 placeholder="name@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
+                className="w-full pl-4 pr-10 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
-              <Mail className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+              <Mail className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5 pointer-events-none" />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="font-bold text-stone-700">رقم الهاتف / واتساب</label>
+            <label className="font-bold text-stone-700 dark:text-stone-300">رقم الهاتف / واتساب</label>
             <div className="relative">
               <input
                 type="tel"
                 placeholder="777360681"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full pl-4 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
+                className="w-full pl-4 pr-10 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
-              <Phone className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+              <Phone className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5 pointer-events-none" />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="font-bold text-stone-700">كلمة المرور *</label>
+            <label className="font-bold text-stone-700 dark:text-stone-300">كلمة المرور *</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -166,13 +166,13 @@ export default function CustomerRegisterPage() {
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full pl-10 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
+                className="w-full pl-10 pr-10 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
-              <Lock className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+              <Lock className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5 pointer-events-none" />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-3.5 left-3.5 text-stone-400 hover:text-stone-600 focus:outline-none"
+                className="absolute top-3.5 left-3.5 text-stone-400 hover:text-gold focus:outline-none"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -180,7 +180,7 @@ export default function CustomerRegisterPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-bold text-stone-700">تأكيد كلمة المرور *</label>
+            <label className="font-bold text-stone-700 dark:text-stone-300">تأكيد كلمة المرور *</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -188,9 +188,9 @@ export default function CustomerRegisterPage() {
                 placeholder="••••••••"
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                className="w-full pl-10 pr-10 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none text-stone-900"
+                className="w-full pl-10 pr-10 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
-              <Lock className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5" />
+              <Lock className="w-4 h-4 text-stone-400 absolute top-3.5 right-3.5 pointer-events-none" />
             </div>
           </div>
 
@@ -204,9 +204,9 @@ export default function CustomerRegisterPage() {
           </button>
         </form>
 
-        <div className="text-center pt-2 border-t border-stone-100 text-xs text-stone-500">
+        <div className="text-center pt-2 border-t border-stone-200/40 dark:border-stone-800 text-xs text-stone-500 dark:text-stone-400">
           <span>لديك حساب بالفعل؟ </span>
-          <Link href="/login" className="text-gold-dark font-bold hover:underline">
+          <Link href="/login" className="text-gold font-bold hover:underline">
             تسجيل الدخول
           </Link>
         </div>

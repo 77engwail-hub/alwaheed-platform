@@ -486,7 +486,7 @@ export default function PostsFeedPage() {
                   {/* Add New Comment Form */}
                   <form
                     onSubmit={(e) => handleAddComment(post.id, e)}
-                    className="space-y-3 bg-stone-900 p-4 rounded-2xl border border-stone-800"
+                    className="space-y-3 bg-stone-900/90 dark:bg-stone-900 p-4 rounded-2xl border border-stone-800"
                   >
                     <span className="text-xs font-bold text-gold block">أضف تعليقك أو استفسارك:</span>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -503,7 +503,7 @@ export default function PostsFeedPage() {
                             },
                           }))
                         }
-                        className="text-xs bg-stone-950 border border-stone-700 rounded-xl px-3 py-2 text-white placeholder-stone-500 focus:outline-none focus:border-gold"
+                        className="text-xs themed-input rounded-xl px-3 py-2"
                       />
                       <input
                         type="text"
@@ -519,7 +519,7 @@ export default function PostsFeedPage() {
                             },
                           }))
                         }
-                        className="sm:col-span-2 text-xs bg-stone-950 border border-stone-700 rounded-xl px-3 py-2 text-white placeholder-stone-500 focus:outline-none focus:border-gold"
+                        className="sm:col-span-2 text-xs themed-input rounded-xl px-3 py-2"
                       />
                     </div>
                     <div className="flex justify-end">

@@ -2,16 +2,15 @@
 
 import React, { useState } from 'react';
 import {
+  MapPin,
   Phone,
   MessageSquare,
-  MapPin,
   Clock,
   Send,
   CheckCircle2,
   AlertCircle,
   Sparkles,
 } from 'lucide-react';
-
 import { GoogleMapSection } from '../../components/GoogleMapSection';
 
 export default function ContactPage() {
@@ -30,12 +29,11 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setErrorMsg('');
     setSuccessMsg('');
+    setErrorMsg('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-      const res = await fetch(`${apiUrl}/api/v1/settings/contact`, {
+      const res = await fetch('/api/v1/settings/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -61,10 +59,10 @@ export default function ContactPage() {
           <Sparkles className="w-3.5 h-3.5" />
           <span>تواصل مباشر مع الإدارة والورش</span>
         </span>
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-stone-900">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-stone-900 dark:text-stone-100">
           تواصل مع مؤسسة الوحيد للزخرفة المعمارية
         </h1>
-        <p className="text-xs sm:text-sm text-stone-500 leading-relaxed">
+        <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 leading-relaxed">
           يسعدنا استقبال استفساراتكم وزيارتكم في مقرنا ومعارضنا في صنعاء، أو التواصل مباشرة عبر الهاتف والواتساب.
         </p>
       </div>
@@ -152,20 +150,20 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form */}
-        <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-stone-200 shadow-stone-sm space-y-6">
-          <h2 className="text-xl font-bold text-stone-900 border-r-4 border-gold pr-3">
+        <div className="lg:col-span-7 themed-card rounded-3xl p-8 sm:p-10 space-y-6">
+          <h2 className="text-xl font-bold text-stone-900 dark:text-stone-100 border-r-4 border-gold pr-3">
             أرسل لنا استفسارك أو رسالتك
           </h2>
 
           {successMsg && (
-            <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl text-xs flex items-center gap-2">
+            <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 rounded-xl text-xs flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 shrink-0" />
               <span>{successMsg}</span>
             </div>
           )}
 
           {errorMsg && (
-            <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
+            <div className="p-4 bg-rose-500/10 border border-rose-500/30 text-rose-500 rounded-xl text-xs flex items-center gap-2">
               <AlertCircle className="w-5 h-5 shrink-0" />
               <span>{errorMsg}</span>
             </div>
@@ -174,58 +172,58 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-stone-700">الاسم *</label>
+                <label className="text-xs font-bold text-stone-700 dark:text-stone-300">الاسم *</label>
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="اسمك الكريم"
-                  className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                  className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-stone-700">رقم الهاتف *</label>
+                <label className="text-xs font-bold text-stone-700 dark:text-stone-300">رقم الهاتف *</label>
                 <input
                   type="tel"
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="رقم للتواصل والرد"
-                  className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                  className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
                 />
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-700">موضوع الرسالة *</label>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300">موضوع الرسالة *</label>
               <input
                 type="text"
                 required
                 value={formData.subject}
                 onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                 placeholder="مثال: استفسار عن توريد حجر حبش لفيلا سكنية"
-                className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none"
+                className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-700">الرسالة والتفاصيل *</label>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300">الرسالة والتفاصيل *</label>
               <textarea
                 required
                 rows={4}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="اكتب رسالتك أو استفسارك هنا بالتفصيل..."
-                className="w-full text-sm px-4 py-3 rounded-xl border border-stone-300 focus:border-gold focus:ring-1 focus:ring-gold outline-none resize-none"
+                className="w-full text-sm px-4 py-3 rounded-xl themed-input focus:border-gold focus:ring-1 focus:ring-gold outline-none resize-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-stone-900 hover:bg-stone-800 text-gold font-bold text-sm py-3.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+              className="w-full bg-gold hover:bg-gold-dark text-stone-950 font-bold text-sm py-3.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
             >
               <Send className="w-4 h-4" />
               <span>{isSubmitting ? 'جاري الإرسال...' : 'إرسال الرسالة الآن'}</span>
@@ -235,7 +233,7 @@ export default function ContactPage() {
       </div>
 
       {/* Google Maps Location Section */}
-      <div className="pt-8 border-t border-stone-200">
+      <div className="pt-8 border-t border-stone-200/40 dark:border-stone-800">
         <GoogleMapSection />
       </div>
     </div>
