@@ -512,4 +512,126 @@ export class AuthService {
 
     return true;
   }
+
+  static async forgotPassword(identifier: string, origin?: string, ipAddress?: string) {
+    const rawIdentifier = identifier.trim();
+    const cleanPhone = rawIdentifier.replace(/[\s\-]/g, '');
+    const phoneNoCode = cleanPhone.replace(/^(\+967|00967|0)/, '');
+    const phoneVariants = [
+      rawIdentifier,
+      cleanPhone,
+      phoneNoCode,
+      `+967${phoneNoCode}`,
+      `00967${phoneNoCode}`,
+      `0${phoneNoCode}`,
+    ].filter(Boolean);
+
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: rawIdentifier },
+          { email: rawIdentifier.toLowerCase() },
+          { phone: { in: phoneVariants } },
+          { name: rawIdentifier },
+        ],
+      },
+    });
+
+    if (!user) {
+      return {
+        success: true,
+        message: 'إذا كان هذا الحساب مسجلاً لدينا، فسيتم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني المرتبط.',
+      };
+    }
+
+    if (!user.isActive) {
+      throw new Error('تم تعطيل هذا الحساب. يرجى التواصل مع إدارة النظام للمساعدة.');
+    }
+
+    // Generate secure 1-hour reset token
+    const resetToken = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+        purpose: 'PASSWORD_RESET',
+      },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    const baseUrl = origin || 'http://localhost:3001';
+    const resetUrl = `${baseUrl}/reset-password?token=${resetToken}`;
+
+    await AuditService.log({
+      userId: user.id,
+      userEmail: user.email,
+      action: 'PASSWORD_RESET_REQUESTED',
+      entityType: 'User',
+      entityId: user.id,
+      details: { email: user.email, resetUrl },
+      ipAddress,
+    });
+
+    console.log(`\n======================================================`);
+    console.log(`[AUTH] 📧 Password Reset Email Requested for: ${user.email}`);
+    console.log(`[AUTH] 🔗 Reset URL: ${resetUrl}`);
+    console.log(`[AUTH] 🔑 Token: ${resetToken}`);
+    console.log(`======================================================\n`);
+
+    return {
+      success: true,
+      message: `تم إرسال رابط إعادة تعيين كلمة المرور بنجاح إلى البريد الإلكتروني: ${user.email.replace(/(.{2})(.*)(@.*)/, '$1***$3')}`,
+      email: user.email,
+      resetUrl,
+      resetToken,
+    };
+  }
+
+  static async resetPasswordWithToken(input: { token: string; newPassword: string }, ipAddress?: string) {
+    if (!input.token) {
+      throw new Error('رمز إعادة التعيين مطلوب');
+    }
+    if (!input.newPassword || input.newPassword.length < 6) {
+      throw new Error('كلمة المرور الجديدة يجب ألا تقل عن 6 أحرف');
+    }
+
+    let payload: any;
+    try {
+      payload = jwt.verify(input.token, JWT_SECRET);
+    } catch {
+      throw new Error('رابط إعادة تعيين كلمة المرور منتهي الصلاحية أو غير صالح. يرجى طلب رابط جديد.');
+    }
+
+    if (payload.purpose !== 'PASSWORD_RESET' || !payload.userId) {
+      throw new Error('رمز إعادة التعيين غير صالح');
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: payload.userId },
+    });
+
+    if (!user) {
+      throw new Error('المستخدم غير موجود');
+    }
+
+    const passwordHash = await bcrypt.hash(input.newPassword, 10);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { passwordHash },
+    });
+
+    await AuditService.log({
+      userId: user.id,
+      userEmail: user.email,
+      action: 'PASSWORD_RESET_COMPLETED',
+      entityType: 'User',
+      entityId: user.id,
+      ipAddress,
+    });
+
+    return {
+      success: true,
+      message: 'تم إعادة تعيين كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.',
+    };
+  }
 }
